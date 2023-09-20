@@ -1,7 +1,6 @@
-import { greetUser } from '$utils/greet';
+import * as THREE from 'three';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  const name = 'John Doe';
-  greetUser(name);
+  console.log('wor2');
 });
