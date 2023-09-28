@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@finsweet/ts-utils": "^0.39.2",
+    "@studio-freight/lenis": "^1.0.23",
     "three": "^0.156.1"
   },
   "engines": {
