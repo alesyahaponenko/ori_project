@@ -11,8 +11,21 @@ window.Webflow ||= [];
 window.Webflow.push(() => {
   console.log('work dev');
   newsGallery();
+  portfolioGallery();
   init3D();
 });
+
+function portfolioGallery() {
+  const portfWrapp = document.querySelector('.portfolio-wrap');
+  const index = 0;
+  document.querySelector('.btnnext-portfolio').addEventListener('click', () => {
+    console.log('click');
+    gsap.to(portfWrapp, { xPercent: -50, duration: 0.5 });
+  });
+  document.querySelector('.btnprev-portfolio').addEventListener('click', () => {
+    gsap.to(portfWrapp, { xPercent: 0, duration: 0.5 });
+  });
+}
 
 function newsGallery() {
   const wrapper = document.querySelector('.wrapp');
