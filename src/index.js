@@ -17,7 +17,6 @@ window.Webflow.push(() => {
 
 function portfolioGallery() {
   const portfWrapp = document.querySelector('.portfolio-wrap');
-  const index = 0;
   document.querySelector('.btnnext-portfolio').addEventListener('click', () => {
     console.log('click');
     gsap.to(portfWrapp, { xPercent: -50, duration: 0.5 });
