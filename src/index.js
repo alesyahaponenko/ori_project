@@ -401,7 +401,7 @@ function init3D() {
     loader.setDRACOLoader(dracoLoader);
     loader.load(
       // resource URL
-      'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/6531a07615e0a08f5bdab0ec_model22.glb.txt',
+      'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/653568583ca73a3760379edb_model23.glb.txt',
 
       function (gltf) {
         scene.add(gltf.scene);
@@ -651,10 +651,10 @@ function init3D() {
         let centerX = window.innerWidth * 0.5;
         let centerY = window.innerHeight * 0.5;
 
-        scene.rotation.y = ((e.clientX - centerX) / centerX) * 0.04 * mouseTolerance;
-        scene.rotation.x = ((e.clientY - centerY) / centerY) * 0.05 * mouseTolerance;
-
         if (glassThing) {
+          // glassThing.position.y = ((e.clientX - centerX) / centerX) * 0.004 * mouseTolerance;
+          // glassThing.position.x = ((e.clientY - centerY) / centerY) * 0.005 * mouseTolerance;
+
           glassThing.rotation.y = ((e.clientX - centerX) / centerX) * 0.7;
           glassThing.rotation.x = ((e.clientY - centerY) / centerY) * 0.5;
         }
