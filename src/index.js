@@ -1,15 +1,12 @@
-import * as dat from 'dat.gui';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Scrollbar from 'smooth-scrollbar';
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  console.log('work dev');
   newsGallery();
   portfolioGallery();
   init3D();
@@ -287,10 +284,8 @@ function newsGallery() {
 function init3D() {
   gsap.registerPlugin(ScrollTrigger);
 
-  // 3d
   let camera, scene, renderer;
   let mixers = [];
-  let controls;
   let directionalLight, directionalLight2;
   let isMobile, desktop, device;
 
@@ -348,13 +343,7 @@ function init3D() {
   init();
 
   function init() {
-    console.log('---3D init');
-    const gui = new dat.GUI();
-
     scene = new THREE.Scene();
-    // scene.background = new THREE.Color(0xff0000);
-
-    // camera = new THREE.PerspectiveCamera(45, aspect, 1, 1000);
     camera = new THREE.OrthographicCamera(
       (frustumSize * aspect) / -2,
       (frustumSize * aspect) / 2,
@@ -388,7 +377,6 @@ function init3D() {
       'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/65319bf1a64f5e5f8bc368b6_illu_portfolio%401%2C5x.jpg'
     );
     image4.colorSpace = THREE.SRGBColorSpace;
-    // image4.flipY = false;
 
     const image5 = textureLoader.load(
       'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/65319e9a7dccba83839abd0c_illu_news%401%2C5x.jpg'
@@ -406,58 +394,24 @@ function init3D() {
       side: THREE.DoubleSide,
       color: 0xf2f2f2,
     });
-    // material.map = environmentMap;
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
     // Load a glTF resource
     let loader = new GLTFLoader();
-    THREE.ImageUtils.crossOrigin = '';
-    loader.crossOrigin = true;
     let dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
     loader.load(
-      // resource URL
       'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/6537b3e04ea8c54e8c9e3fb9_model25.glb.txt',
 
       function (gltf) {
         scene.add(gltf.scene);
 
-        // console.log(gltf.scene);
-
         const model = gltf.scene;
         const { animations } = gltf;
 
-        // Material
-        // const glassMaterial = new THREE.MeshPhysicalMaterial({
-        //   reflectivity: 0.5,
-        //   roughness: 0,
-        //   transmission: 1.5,
-        //   thickness: 1.8,
-        //   ior: 1.7,
-        //   clearcoat: 1,
-        //   sheenRoughness: 1,
-        //   envMap: environmentMap,
-        //   envMapIntensity: 1.2,
-        // });
-
-        /**
-         * Debug
-         */
-        function onMaterialUpdate() {
-          glassMaterial.reflectivity = options.reflectivity;
-          glassMaterial.roughness = options.roughness;
-          glassMaterial.transmission = options.transmission;
-          glassMaterial.thickness = options.thickness;
-          glassMaterial.ior = options.ior;
-          glassMaterial.clearcoat = options.clearcoat;
-          glassMaterial.sheenRoughness = options.sheenRoughness;
-          glassMaterial.envMapIntensity = options.envMapIntensity;
-          glassMaterial.needsUpdate = true;
-        }
-
-        const options = {
+        const glassMaterial = new THREE.MeshPhysicalMaterial({
           materialColor: '#FFFFFF',
           sheenRoughness: 0.5,
           reflectivity: 0.5,
@@ -466,37 +420,14 @@ function init3D() {
           thickness: 0.086,
           ior: 1.23,
           clearcoat: 1,
-          // envMap: environmentMap,
-          envMapIntensity: 1.5,
-        };
-
-        gui.add(options, 'reflectivity', 0, 3, 0.01).onChange(onMaterialUpdate);
-        gui.add(options, 'sheenRoughness', 0, 3, 0.01).onChange(onMaterialUpdate);
-        gui.add(options, 'roughness', 0, 1, 0.01).onChange(onMaterialUpdate);
-        gui.add(options, 'transmission', 0, 2, 0.01).onChange(onMaterialUpdate);
-        gui.add(options, 'thickness', 0, 0.2, 0.001).onChange(onMaterialUpdate);
-        gui.add(options, 'ior', 0, 3, 0.01).onChange(onMaterialUpdate);
-        gui.add(options, 'clearcoat', 0, 3, 0.01).onChange(onMaterialUpdate);
-        gui.add(options, 'envMapIntensity', 0, 10, 0.01).onChange(onMaterialUpdate);
-        gui.close();
-        const glassMaterial = new THREE.MeshPhysicalMaterial({
-          sheenRoughness: options.sheenRoughness,
-          reflectivity: options.reflectivity,
-          roughness: options.roughness,
-          transmission: options.transmission,
-          thickness: options.thickness,
-          ior: options.ior,
-          clearcoat: options.clearcoat,
           envMap: environmentMap,
-          envMapIntensity: options.envMapIntensity,
+          envMapIntensity: 1.5,
         });
 
         gltf.scene.traverse(function (child) {
-          // console.log(child);
 
           if (child.name === 'cameraBlender') {
             importedCamera = scene.getObjectByName('cameraBlender');
-            // console.log('------3D ' + child.name + ' found on ' + gltf.scene.name);
           }
 
           if (child.name === 'bg_full') {
@@ -505,7 +436,6 @@ function init3D() {
             bg_full.material = new THREE.MeshBasicMaterial({
               color: '#fafafa',
             });
-            // console.log('------3D ' + child.name + ' found on ' + gltf.scene.name);
           }
           if (child.name === 'glassThing') {
             glassThing = scene.getObjectByName('glassThing');
@@ -567,19 +497,15 @@ function init3D() {
           }
         });
 
-        var mixer = new THREE.AnimationMixer(model);
+        let mixer = new THREE.AnimationMixer(model);
         mixers.push(mixer);
 
         animations.forEach(function (clip) {
           mixer.clipAction(clip).play();
         });
-        // var action = mixer.clipAction(animation);
-        // action.play();
 
         animate();
-        // loaded3D = true;
       },
-      // called while loading is progressing
       function (xhr) {
         globalPerc = (xhr.loaded / 5736000) * 100;
         if (globalPerc > 99.99) {
@@ -595,11 +521,10 @@ function init3D() {
     );
 
     const viewport = document.querySelector('[data-3d="c"]');
-    // console.log(viewport);
 
     renderer = new THREE.WebGLRenderer({
       antialias: true,
-      powerPreference: 'high-performance',
+      // powerPreference: 'high-performance',
     });
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setClearAlpha(0);
@@ -607,27 +532,8 @@ function init3D() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     viewport.appendChild(renderer.domElement);
 
-    /**
-     * Lights
-     */
     const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x080808, 2.2);
     scene.add(hemisphereLight);
-
-    // function onLightUpdate() {
-    //   directionalLight.position.x = lightOptions.posX;
-    //   directionalLight.position.y = lightOptions.posY;
-    //   directionalLight.position.z = lightOptions.posZ;
-    // }
-
-    // const lightOptions = {
-    //   posX: 0.2,
-    //   posY: 0.1,
-    //   posZ: -0.5,
-    // };
-
-    // gui.add(lightOptions, 'posX', -2, 2, 0.1).onChange(onLightUpdate);
-    // gui.add(lightOptions, 'posY', -2, 2, 0.1).onChange(onLightUpdate);
-    // gui.add(lightOptions, 'posZ', -2, 2, 0.1).onChange(onLightUpdate);
 
     directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.castShadow = true;
@@ -638,7 +544,6 @@ function init3D() {
     directionalLight.shadow.camera.right = 7;
     directionalLight.shadow.camera.bottom = -7;
     directionalLight.position.set(0.2, 0.1, -0.5);
-    // directionalLight.position.set(lightOptions.posX, lightOptions.posY, lightOptions.posZ);
     scene.add(directionalLight);
 
     directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
@@ -651,28 +556,13 @@ function init3D() {
     directionalLight2.shadow.camera.bottom = -7;
     directionalLight2.position.set(-0.4, 0.1, -0.5);
     scene.add(directionalLight2);
-    // gsap.to(directionalLight2.position, { x: -0.4, repeat: -1, yoyo: true, duration: 1 });
 
-    // const helper2 = new THREE.DirectionalLightHelper(directionalLight2, 0.1);
-    // scene.add(helper2);
-
-    // const helper = new THREE.DirectionalLightHelper(directionalLight, 0.1);
-    // scene.add(helper);
-
-    // const pointLight = new THREE.PointLight(0xffffff, 2);
-    // pointLight.position.set(1.2, 0, 0);
-    // scene.add(pointLight);
-
-    let mouseTolerance = 0.5;
     if (desktop === true) {
       document.onmousemove = function (e) {
         let centerX = window.innerWidth * 0.5;
         let centerY = window.innerHeight * 0.5;
 
         if (glassThing) {
-          // glassThing.position.y = ((e.clientX - centerX) / centerX) * 0.004 * mouseTolerance;
-          // glassThing.position.x = ((e.clientY - centerY) / centerY) * 0.005 * mouseTolerance;
-
           glassThing.rotation.y = ((e.clientX - centerX) / centerX) * 0.3;
           glassThing.rotation.x = ((e.clientY - centerY) / centerY) * 0.2;
         }
@@ -685,12 +575,6 @@ function init3D() {
     scrollerProxyInit();
   }
 
-  // Controls
-  // controls = new OrbitControls(camera, viewport);
-  // controls = new OrbitControls(camera, renderer.domElement);
-  // controls.target.set(0, 0, -5);
-  // controls.enableDamping = true;
-  // controls.update();
   function scrollerProxyInit() {
     ScrollTrigger.scrollerProxy('.wrapscroll', {
       scrollTop(value) {
@@ -707,30 +591,11 @@ function init3D() {
     ScrollTrigger.defaults({ scroller: scroller });
   }
 
-  // const tl = gsap.timeline({});
-  // ScrollTrigger.create({
-  //   trigger: '.start2',
-  //   animation: tl,
-  //   start: 'top top',
-  //   end: () => '+=150%',
-  //   scrub: true,
-  // });
-  // tl.to(directionalLight.color, { r: 1, g: 0, b: 0 });
-  // tl.to(directionalLight, { intensity: 3 }, '<');
-  // tl.to(directionalLight2.color, { r: 1, g: 0, b: 0 }, '<');
-  // tl.to(directionalLight2, { intensity: 2 }, '<');
-
-  // tl.to(directionalLight.color, { r: 0, g: 0, b: 1 });
-  // tl.to(directionalLight, { intensity: 3 }, '<');
-  // tl.to(directionalLight2.color, { r: 0, g: 0, b: 1 }, '<');
-  // tl.to(directionalLight2, { intensity: 2 }, '<');
-
   function scrollbarElementInit() {
     scrollBarElement = Scrollbar.init(document.querySelector('.wrapscroll'), {
       continuousScrolling: false,
       alwaysShowTracks: true,
-      damping: 0.07,
-      // renderByPixels: true,
+      damping: 0.1,
     });
   }
 
@@ -750,7 +615,6 @@ function init3D() {
 
   function animate() {
     requestAnimationFrame(animate);
-    // controls.update();
 
     if (glassThing) {
       glassThing.rotation.z += 0.00125;
