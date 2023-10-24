@@ -419,7 +419,7 @@ function init3D() {
     loader.setDRACOLoader(dracoLoader);
     loader.load(
       // resource URL
-      'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/653568583ca73a3760379edb_model23.glb.txt',
+      'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/6537b3e04ea8c54e8c9e3fb9_model25.glb.txt',
 
       function (gltf) {
         scene.add(gltf.scene);
@@ -673,8 +673,8 @@ function init3D() {
           // glassThing.position.y = ((e.clientX - centerX) / centerX) * 0.004 * mouseTolerance;
           // glassThing.position.x = ((e.clientY - centerY) / centerY) * 0.005 * mouseTolerance;
 
-          glassThing.rotation.y = ((e.clientX - centerX) / centerX) * 0.7;
-          glassThing.rotation.x = ((e.clientY - centerY) / centerY) * 0.5;
+          glassThing.rotation.y = ((e.clientX - centerX) / centerX) * 0.3;
+          glassThing.rotation.x = ((e.clientY - centerY) / centerY) * 0.2;
         }
       };
     }
@@ -729,8 +729,8 @@ function init3D() {
     scrollBarElement = Scrollbar.init(document.querySelector('.wrapscroll'), {
       continuousScrolling: false,
       alwaysShowTracks: true,
-      damping: 0.02,
-      renderByPixels: true,
+      damping: 0.07,
+      // renderByPixels: true,
     });
   }
 
