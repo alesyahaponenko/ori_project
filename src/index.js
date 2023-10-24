@@ -4,9 +4,11 @@ import Scrollbar from 'smooth-scrollbar';
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import Stats from 'three/examples/jsm/libs/stats.module.js';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
+  console.log('work dev');
   newsGallery();
   portfolioGallery();
   init3D();
@@ -55,7 +57,7 @@ function newsGallery() {
   function horizontalLoop(items, config) {
     items = gsap.utils.toArray(items);
     config = config || {};
-    let onChange = config.onChange,
+    let { onChange } = config,
       lastIndex = 0,
       tl = gsap.timeline({
         repeat: config.repeat,
@@ -72,7 +74,7 @@ function newsGallery() {
         defaults: { ease: 'none' },
         onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100),
       }),
-      length = items.length,
+      { length } = items,
       startX = items[0].offsetLeft,
       times = [],
       widths = [],
@@ -80,7 +82,7 @@ function newsGallery() {
       xPercents = [],
       curIndex = 0,
       indexIsDirty = false,
-      center = config.center,
+      { center } = config,
       pixelsPerSecond = (config.speed || 1) * 100,
       snap = config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
       timeOffset = 0,
@@ -241,7 +243,7 @@ function newsGallery() {
         trigger: items[0].parentNode,
         type: 'x',
         onPressInit() {
-          let x = this.x;
+          let { x } = this;
           gsap.killTweensOf(tl);
           startProgress = tl.progress();
           refresh();
@@ -284,6 +286,7 @@ function newsGallery() {
 function init3D() {
   gsap.registerPlugin(ScrollTrigger);
 
+  let stats;
   let camera, scene, renderer;
   let mixers = [];
   let directionalLight, directionalLight2;
@@ -301,7 +304,6 @@ function init3D() {
   const frustumSize = 0.18;
   const aspect = window.innerWidth / window.innerHeight;
 
-  //* MOBILE CHECK */
   isMobile = {
     Android: function () {
       return navigator.userAgent.match(/Android/i);
@@ -343,6 +345,8 @@ function init3D() {
   init();
 
   function init() {
+    console.log('---3D init');
+
     scene = new THREE.Scene();
     camera = new THREE.OrthographicCamera(
       (frustumSize * aspect) / -2,
@@ -377,6 +381,7 @@ function init3D() {
       'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/65319bf1a64f5e5f8bc368b6_illu_portfolio%401%2C5x.jpg'
     );
     image4.colorSpace = THREE.SRGBColorSpace;
+    // image4.flipY = false;
 
     const image5 = textureLoader.load(
       'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/65319e9a7dccba83839abd0c_illu_news%401%2C5x.jpg'
@@ -389,20 +394,27 @@ function init3D() {
     environmentMap.mapping = THREE.EquirectangularReflectionMapping;
     environmentMap.colorSpace = THREE.SRGBColorSpace;
 
+    stats = new Stats();
+    document.body.appendChild(stats.dom);
+
     const geometry = new THREE.BoxGeometry(5, 32, 32);
     const material = new THREE.MeshBasicMaterial({
       side: THREE.DoubleSide,
       color: 0xf2f2f2,
     });
+    // material.map = environmentMap;
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
     // Load a glTF resource
     let loader = new GLTFLoader();
+    // THREE.ImageUtils.crossOrigin = '';
+    // loader.crossOrigin = true;
     let dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
     loader.load(
+      // resource URL
       'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/6537b3e04ea8c54e8c9e3fb9_model25.glb.txt',
 
       function (gltf) {
@@ -412,7 +424,6 @@ function init3D() {
         const { animations } = gltf;
 
         const glassMaterial = new THREE.MeshPhysicalMaterial({
-          materialColor: '#FFFFFF',
           sheenRoughness: 0.5,
           reflectivity: 0.5,
           roughness: 0.1,
@@ -425,7 +436,6 @@ function init3D() {
         });
 
         gltf.scene.traverse(function (child) {
-
           if (child.name === 'cameraBlender') {
             importedCamera = scene.getObjectByName('cameraBlender');
           }
@@ -497,7 +507,7 @@ function init3D() {
           }
         });
 
-        let mixer = new THREE.AnimationMixer(model);
+        var mixer = new THREE.AnimationMixer(model);
         mixers.push(mixer);
 
         animations.forEach(function (clip) {
@@ -507,7 +517,7 @@ function init3D() {
         animate();
       },
       function (xhr) {
-        globalPerc = (xhr.loaded / 5736000) * 100;
+        globalPerc = (xhr.loaded / 3000000) * 100;
         if (globalPerc > 99.99) {
           console.log('globalPerc ' + globalPerc + '% loaded');
         }
@@ -524,7 +534,7 @@ function init3D() {
 
     renderer = new THREE.WebGLRenderer({
       antialias: true,
-      // powerPreference: 'high-performance',
+      powerPreference: 'high-performance',
     });
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setClearAlpha(0);
@@ -595,7 +605,8 @@ function init3D() {
     scrollBarElement = Scrollbar.init(document.querySelector('.wrapscroll'), {
       continuousScrolling: false,
       alwaysShowTracks: true,
-      damping: 0.1,
+      damping: 0.07,
+      // renderByPixels: true,
     });
   }
 
@@ -649,5 +660,6 @@ function init3D() {
     }
 
     renderer.render(scene, camera);
+    stats.update();
   }
 }
