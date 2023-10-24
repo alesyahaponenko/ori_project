@@ -17,11 +17,29 @@ window.Webflow.push(() => {
 
 function portfolioGallery() {
   const portfWrapp = document.querySelector('.portfolio-wrap');
-  document.querySelector('.btnnext-portfolio').addEventListener('click', () => {
-    gsap.to(portfWrapp, { xPercent: -50, duration: 0.5 });
+  const btnnext = document.querySelector('.btnnext-portfolio');
+  const btnprev = document.querySelector('.btnprev-portfolio');
+  btnnext.addEventListener('click', () => {
+    gsap.to(portfWrapp, {
+      // xPercent: -55,
+      x: -1200,
+      duration: 0.5,
+      onComplete: () => {
+        btnnext.style.display = 'none';
+        btnprev.style.display = 'block';
+      },
+    });
   });
-  document.querySelector('.btnprev-portfolio').addEventListener('click', () => {
-    gsap.to(portfWrapp, { xPercent: 0, duration: 0.5 });
+  btnprev.addEventListener('click', () => {
+    gsap.to(portfWrapp, {
+      // xPercent: 0,
+      x: 0,
+      duration: 0.5,
+      onComplete: () => {
+        btnnext.style.display = 'block';
+        btnprev.style.display = 'none';
+      },
+    });
   });
 }
 
