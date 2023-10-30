@@ -725,7 +725,7 @@ function init3D() {
     scrollBarElement = Scrollbar.init(document.querySelector('.wrapscroll'), {
       continuousScrolling: false,
       alwaysShowTracks: true,
-      damping: 0.07,
+      damping: desktop ? 0.07 : 1,
       // renderByPixels: true,
     });
   }
@@ -749,10 +749,10 @@ function init3D() {
     // console.log(isMobile.any());
 
     if (glassThing) {
-      glassThing.rotation.z += 0.002;
+      glassThing.rotation.z += desktop ? 0.002 : 0.01;
     }
     if (cylinder) {
-      cylinder.rotation.x -= 0.01;
+      cylinder.rotation.x -= desktop ? 0.01 : 0.05;
     }
 
     // if (camera) {
@@ -765,20 +765,20 @@ function init3D() {
     //   camera.updateProjectionMatrix();
     // }
 
-    if (scrollBarElement) {
-      animationPercent =
-        (100 * scrollBarElement.scrollTop) /
-        (scrollBarElement.size.content.height - window.innerHeight);
-      animationSecond = (animationPercent / 100) * (totalFrame / fps);
-    } else {
-      animationPercent = 0;
-    }
+    // if (scrollBarElement) {
+    //   animationPercent =
+    //     (100 * scrollBarElement.scrollTop) /
+    //     (scrollBarElement.size.content.height - window.innerHeight);
+    //   animationSecond = (animationPercent / 100) * (totalFrame / fps);
+    // } else {
+    //   animationPercent = 0;
+    // }
 
-    if (scrollBarElement) {
-      for (const mixer of mixers) {
-        mixer.setTime(animationSecond);
-      }
-    }
+    // if (scrollBarElement) {
+    //   for (const mixer of mixers) {
+    //     mixer.setTime(animationSecond);
+    //   }
+    // }
 
     renderer.render(scene, camera);
     stats.update();
