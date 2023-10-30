@@ -501,7 +501,7 @@ function init3D() {
                 end: () => '+=150%',
                 scrub: true,
                 onUpdate: () => {
-                  glassThing.rotation.z -= 0.04;
+                  glassThing.rotation.z -= desktop ? 0.04 : 0.16;
                 },
               },
             });
@@ -512,7 +512,7 @@ function init3D() {
                 end: () => '+=350%',
                 scrub: true,
                 onUpdate: () => {
-                  glassThing.rotation.z -= 0.03;
+                  glassThing.rotation.z -= desktop ? 0.03 : 0.12;
                 },
               },
             });
@@ -600,7 +600,7 @@ function init3D() {
           ////------------------4
           if (child.name === 'top_image3') {
             const top_image3 = scene.getObjectByName('top_image3');
-            top_image3.position.y = desktop ? -0.50 : -1.3;
+            top_image3.position.y = desktop ? -0.5 : -1.3;
             top_image3.material = new THREE.MeshBasicMaterial();
             top_image3.material.map = image3;
           }
@@ -725,8 +725,9 @@ function init3D() {
     scrollBarElement = Scrollbar.init(document.querySelector('.wrapscroll'), {
       continuousScrolling: false,
       alwaysShowTracks: true,
-      damping: desktop ? 0.07 : 1,
+      damping: desktop ? 0.05 : 0.2,
       // renderByPixels: true,
+      renderByPixels: !('ontouchstart' in document),
     });
   }
 
