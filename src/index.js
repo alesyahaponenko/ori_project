@@ -342,8 +342,8 @@ function init3D() {
   if (isMobile.any()) {
     desktop = false;
   } else {
-    // desktop = true;
-    desktop = false;
+    desktop = true;
+    // desktop = false;
   }
 
   console.log('desktop: ' + desktop);
