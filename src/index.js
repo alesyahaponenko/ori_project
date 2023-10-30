@@ -549,19 +549,19 @@ function init3D() {
             cylinder = scene.getObjectByName('Cylinder');
             cylinder.material = glassMaterial;
             cylinder.position.y = desktop ? -0.35 : -0.7;
-            cylinder.position.x = desktop ? -0.0054 : -0.08;
+            cylinder.position.x = desktop ? -0.06 : -0.08;
             cylinder.scale.multiplyScalar(desktop ? 1 : 0.8);
           }
           if (child.name === 'process_texts') {
             const process_texts = scene.getObjectByName('process_texts');
             process_texts.position.y = desktop ? -0.35 : -0.7;
-            process_texts.position.x = desktop ? -0.0054 : -0.1;
+            process_texts.position.x = desktop ? -0.06 : -0.1;
             process_texts.scale.multiplyScalar(desktop ? 1 : 0.8);
           }
           if (child.name === 'process') {
             const process = scene.getObjectByName('process');
             process.position.y = desktop ? -0.35 : -0.7;
-            process.position.x = desktop ? -0.0054 : -0.08;
+            process.position.x = desktop ? -0.06 : -0.08;
             process.scale.multiplyScalar(desktop ? 1 : 0.8);
             // process.material = new THREE.MeshBasicMaterial();
             // process.material.map = image_cylender_bg;
@@ -585,13 +585,14 @@ function init3D() {
           ////------------------2
           if (child.name === 'illu_arrows1') {
             const illu_arrows1 = scene.getObjectByName('illu_arrows1');
-            illu_arrows1.position.y = desktop ? -0.2 : -0.35;
-            illu_arrows1.position.x = desktop ? -0.02333 : -0.05;
+            illu_arrows1.position.y = desktop ? -0.25 : -0.35;
+            illu_arrows1.position.x = desktop ? -0.03 : -0.05;
           }
           if (child.name === 'top_image2') {
             const top_image2 = scene.getObjectByName('top_image2');
+            console.log(top_image2.position.x);
             top_image2.position.y = desktop ? -0.2 : -0.35;
-            top_image2.position.x = desktop ? -0.02333 : -0.1;
+            top_image2.position.x = desktop ? -0.065 : -0.1;
             top_image2.material = new THREE.MeshBasicMaterial();
             top_image2.material.map = image2;
             // top_image2.visible = false;
@@ -599,13 +600,13 @@ function init3D() {
           ////------------------4
           if (child.name === 'top_image3') {
             const top_image3 = scene.getObjectByName('top_image3');
-            top_image3.position.y = desktop ? -0.53 : -1.3;
+            top_image3.position.y = desktop ? -0.50 : -1.3;
             top_image3.material = new THREE.MeshBasicMaterial();
             top_image3.material.map = image3;
           }
           if (child.name === 'illu_arrows2') {
             const illu_arrows2 = scene.getObjectByName('illu_arrows2');
-            illu_arrows2.position.y = desktop ? -0.53 : -1.3;
+            illu_arrows2.position.y = desktop ? -0.49 : -1.3;
             // illu_arrows2.visible = false;
           }
           ////------------------5
