@@ -41,27 +41,90 @@ function portfolioGallery() {
       },
     });
   });
+
+  let mm = gsap.matchMedia();
+
+  let index = 0;
+  let animating = false;
+
+  const allBlocks = document.querySelectorAll('.blockportfolio').length - 2;
+
+  mm.add('(max-width: 991px)', () => {
+    function nextPortfolio() {
+      console.log(index);
+
+      if (index === allBlocks) return;
+
+      if (!animating) {
+        animating = true;
+        index++;
+        gsap.to('.portfolio-wrap', {
+          x: () => ((-71 * window.innerWidth - 10) * index) / 100,
+          duration: 1,
+          onComplete: () => {
+            animating = false;
+          },
+        });
+      }
+    }
+
+    function prevPortfolio() {
+      console.log(index);
+
+      if (index === 0) return;
+
+      if (!animating) {
+        animating = true;
+        gsap.to('.portfolio-wrap', {
+          x: () => (-71 * window.innerWidth * (index - 1)) / 100,
+          duration: 1,
+          onComplete: () => {
+            index--;
+            animating = false;
+          },
+        });
+      }
+    }
+
+    Observer.create({
+      type: 'touch',
+      target: '.column-wrap',
+      onLeft: () => nextPortfolio(),
+      onRight: () => prevPortfolio(),
+      tolerance: 10,
+      preventDefault: true,
+    });
+  });
 }
 
 function newsGallery() {
   gsap.registerPlugin(Observer);
+  let animating = false;
   const wrapper = document.querySelector('.wrapp');
   const boxes = gsap.utils.toArray('.box');
   const loop = horizontalLoop(boxes, { paused: true, paddingRight: 4, draggable: true });
 
-  document
-    .querySelector('.btnnext')
-    .addEventListener('click', () => loop.next({ duration: 0.4, ease: 'power1.inOut' }));
-  document
-    .querySelector('.btnprev')
-    .addEventListener('click', () => loop.previous({ duration: 0.4, ease: 'power1.inOut' }));
+  function startNext() {
+    if (!animating) {
+      animating = true;
+      loop.next({ duration: 0.4, ease: 'power1.inOut' });
+    }
+  }
+  function startPrev() {
+    if (!animating) {
+      animating = true;
+      loop.previous({ duration: 0.4, ease: 'power1.inOut' });
+    }
+  }
 
-  const animating = false;
+  document.querySelector('.btnnext').addEventListener('click', startNext);
+  document.querySelector('.btnprev').addEventListener('click', startPrev);
+
   Observer.create({
     type: 'touch',
     target: '.collection-list-wrapper-4.w-dyn-list',
-    onLeft: () => !animating && loop.next({ duration: 0.4, ease: 'power1.inOut' }),
-    onRight: () => !animating && loop.previous({ duration: 0.4, ease: 'power1.inOut' }),
+    onLeft: () => startNext(),
+    onRight: () => startPrev(),
     tolerance: 10,
     preventDefault: true,
   });
@@ -84,7 +147,9 @@ function newsGallery() {
           },
         paused: config.paused,
         defaults: { ease: 'none' },
-        onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100),
+        onReverseComplete: () => {
+          tl.totalTime(tl.rawTime() + tl.duration() * 100);
+        },
       }),
       { length } = items,
       startX = items[0].offsetLeft,
@@ -200,8 +265,12 @@ function newsGallery() {
     populateWidths();
     populateTimeline();
     populateOffsets();
+
     window.addEventListener('resize', () => refresh(true));
     function toIndex(index, vars) {
+      setTimeout(() => {
+        animating = false;
+      }, 500);
       vars = vars || {};
       Math.abs(index - curIndex) > length / 2 && (index += index > curIndex ? -length : length); // always go in the shortest direction
       let newIndex = gsap.utils.wrap(0, length, index),
@@ -539,7 +608,7 @@ function init3D() {
             } else {
               tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
               tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' }, '<');
-              tl.set(glassThing.position, { x: -0.14, y: -1.3 }, '+=5');
+              tl.set(glassThing.position, { x: -0.14, y: -1.25 }, '+=5');
               tl.to(glassThing.position, { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' }, '<+=5');
               tl.to(glassThing.position, { x: -0.1, y: -1.75, duration: 1, ease: 'none' });
             }
@@ -590,24 +659,21 @@ function init3D() {
           }
           if (child.name === 'top_image2') {
             const top_image2 = scene.getObjectByName('top_image2');
-            console.log(top_image2.position.x);
             top_image2.position.y = desktop ? -0.2 : -0.35;
             top_image2.position.x = desktop ? -0.065 : -0.1;
             top_image2.material = new THREE.MeshBasicMaterial();
             top_image2.material.map = image2;
-            // top_image2.visible = false;
           }
           ////------------------4
           if (child.name === 'top_image3') {
             const top_image3 = scene.getObjectByName('top_image3');
-            top_image3.position.y = desktop ? -0.5 : -1.3;
+            top_image3.position.y = desktop ? -0.5 : -1.25;
             top_image3.material = new THREE.MeshBasicMaterial();
             top_image3.material.map = image3;
           }
           if (child.name === 'illu_arrows2') {
             const illu_arrows2 = scene.getObjectByName('illu_arrows2');
-            illu_arrows2.position.y = desktop ? -0.49 : -1.3;
-            // illu_arrows2.visible = false;
+            illu_arrows2.position.y = desktop ? -0.49 : -1.25;
           }
           ////------------------5
           if (child.name === 'top_image4') {
