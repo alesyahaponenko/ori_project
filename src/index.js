@@ -9,7 +9,6 @@ import Stats from 'three/examples/jsm/libs/stats.module.js';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  console.log('work dev');
   newsGallery();
   portfolioGallery();
   init3D();
@@ -50,8 +49,6 @@ function portfolioGallery() {
 
   mm.add('(max-width: 991px)', () => {
     function nextPortfolio() {
-      console.log(index);
-
       if (index === allBlocks) return;
 
       if (!animating) {
@@ -68,8 +65,6 @@ function portfolioGallery() {
     }
 
     function prevPortfolio() {
-      console.log(index);
-
       if (index === 0) return;
 
       if (!animating) {
@@ -304,61 +299,6 @@ function newsGallery() {
       tl.vars.onReverseComplete();
       tl.reverse();
     }
-    // if (config.draggable && typeof Draggable === 'function') {
-    //   proxy = document.createElement('div');
-    //   let wrap = gsap.utils.wrap(0, 1),
-    //     ratio,
-    //     startProgress,
-    //     draggable,
-    //     dragSnap,
-    //     lastSnap,
-    //     initChangeX,
-    //     align = () => tl.progress(wrap(startProgress + (draggable.startX - draggable.x) * ratio)),
-    //     syncIndex = () => tl.closestIndex(true);
-    //   // typeof InertiaPlugin === 'undefined' &&
-    //   //   console.warn(
-    //   //     'InertiaPlugin required for momentum-based scrolling and snapping. https://greensock.com/club'
-    //   //   );
-    //   draggable = Draggable.create(proxy, {
-    //     trigger: items[0].parentNode,
-    //     type: 'x',
-    //     onPressInit() {
-    //       let { x } = this;
-    //       gsap.killTweensOf(tl);
-    //       startProgress = tl.progress();
-    //       refresh();
-    //       ratio = 1 / totalWidth;
-    //       initChangeX = startProgress / -ratio - x;
-    //       gsap.set(proxy, { x: startProgress / -ratio });
-    //     },
-    //     onDrag: align,
-    //     onThrowUpdate: align,
-    //     overshootTolerance: 0,
-    //     inertia: true,
-    //     snap(value) {
-    //       //note: if the user presses and releases in the middle of a throw, due to the sudden correction of proxy.x in the onPressInit(), the velocity could be very large, throwing off the snap. So sense that condition and adjust for it. We also need to set overshootTolerance to 0 to prevent the inertia from causing it to shoot past and come back
-    //       if (Math.abs(startProgress / -ratio - this.x) < 10) {
-    //         return lastSnap + initChangeX;
-    //       }
-    //       let time = -(value * ratio) * tl.duration(),
-    //         wrappedTime = timeWrap(time),
-    //         snapTime = times[getClosest(times, wrappedTime, tl.duration())],
-    //         dif = snapTime - wrappedTime;
-    //       Math.abs(dif) > tl.duration() / 2 && (dif += dif < 0 ? tl.duration() : -tl.duration());
-    //       lastSnap = (time + dif) / tl.duration() / -ratio;
-    //       return lastSnap;
-    //     },
-    //     onRelease() {
-    //       syncIndex();
-    //       draggable.isThrowing && (indexIsDirty = true);
-    //     },
-    //     onThrowComplete: syncIndex,
-    //   })[0];
-    //   tl.draggable = draggable;
-    // }
-    // tl.closestIndex(true);
-    // lastIndex = curIndex;
-    // onChange && onChange(items[curIndex], curIndex);
     return tl;
   }
 }
@@ -416,10 +356,7 @@ function init3D() {
     desktop = false;
   } else {
     desktop = true;
-    // desktop = false;
   }
-
-  console.log('desktop: ' + desktop);
 
   let frustumSize = desktop ? 0.18 : 0.35;
   const aspect = window.innerWidth / window.innerHeight;
@@ -429,8 +366,6 @@ function init3D() {
   init();
 
   function init() {
-    console.log('---3D init');
-
     scene = new THREE.Scene();
     desktop ? scene.position.set(0, 0, 0) : scene.position.set(0.1, -0.1, 0);
 
@@ -598,8 +533,6 @@ function init3D() {
                 scrub: true,
                 onUpdate: () => {
                   glassThing.rotation.z -= 0.02;
-                  // console.log('y', glassThing.position.y);
-                  // console.log('x', glassThing.position.x);
                 },
               },
             });
@@ -647,19 +580,19 @@ function init3D() {
             cylinder.material = glassMaterial;
             cylinder.position.y = desktop ? -0.365 : -0.7;
             cylinder.position.x = desktop ? -0.06 : -0.08;
-            cylinder.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+            cylinder.scale.multiplyScalar(desktop ? 0.9 : 0.8);
           }
           if (child.name === 'process_texts') {
             const process_texts = scene.getObjectByName('process_texts');
             process_texts.position.y = desktop ? -0.365 : -0.7;
             process_texts.position.x = desktop ? -0.078 : -0.1;
-            process_texts.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+            process_texts.scale.multiplyScalar(desktop ? 0.9 : 0.8);
           }
           if (child.name === 'process') {
             const process = scene.getObjectByName('process');
             process.position.y = desktop ? -0.365 : -0.7;
             process.position.x = desktop ? -0.06 : -0.08;
-            process.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+            process.scale.multiplyScalar(desktop ? 0.9 : 0.8);
             // process.material = new THREE.MeshBasicMaterial();
             // process.material.map = image_cylender_bg;
             // process.material.alphaMap = image_cylender_bg_alpha;
@@ -715,7 +648,7 @@ function init3D() {
       function (xhr) {
         globalPerc = (xhr.loaded / 3000000) * 100;
         if (globalPerc > 99.99) {
-          console.log('globalPerc ' + globalPerc + '% loaded');
+          // console.log('globalPerc ' + globalPerc + '% loaded');
         }
         // var bar = Math.floor((250 * xhr.loaded) / xhr.total);
         // var loadbar = document.getElementById('bar');
