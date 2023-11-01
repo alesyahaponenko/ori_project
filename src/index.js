@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Scrollbar from 'smooth-scrollbar';
+import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -21,8 +21,7 @@ function portfolioGallery() {
   const btnprev = document.querySelector('.btnprev-portfolio');
   btnnext.addEventListener('click', () => {
     gsap.to(portfWrapp, {
-      // xPercent: -55,
-      x: -1200,
+      x: '-60vw',
       duration: 0.5,
       onComplete: () => {
         btnnext.style.display = 'none';
@@ -398,8 +397,12 @@ function init3D() {
     Windows: function () {
       return navigator.userAgent.match(/IEMobile/i);
     },
+    MobileWidth: function () {
+      return window.innerWidth < 992;
+    },
     any: function () {
       return (
+        isMobile.MobileWidth() ||
         isMobile.Android() ||
         isMobile.BlackBerry() ||
         isMobile.iOS() ||
@@ -408,6 +411,7 @@ function init3D() {
       );
     },
   };
+
   if (isMobile.any()) {
     desktop = false;
   } else {
@@ -490,7 +494,7 @@ function init3D() {
     environmentMap.colorSpace = THREE.SRGBColorSpace;
 
     stats = new Stats();
-    document.body.appendChild(stats.dom);
+    // document.body.appendChild(stats.dom);
 
     const geometry = new THREE.BoxGeometry(5, 32, 32);
     const material = new THREE.MeshBasicMaterial({
@@ -600,47 +604,20 @@ function init3D() {
               },
             });
             if (desktop) {
-              tl.to(glassThing.position, { x: -0.05, y: -0.2, duration: 0.7, ease: 'none' });
+              tl.to(glassThing.position, { x: -0.05, y: -0.19, duration: 0.7, ease: 'none' });
               tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' }, '<');
-              tl.set(glassThing.position, { x: -0.14, y: -0.51 }, '+=0.6');
+              tl.set(glassThing.position, { x: -0.12, y: -0.55 }, '+=0.6');
               tl.to(glassThing.position, { x: -0.03, y: -0.7, duration: 1, ease: 'none' }, '+=0.8');
-              tl.to(glassThing.position, { x: -0.01, y: -0.9, duration: 1, ease: 'none' });
+              tl.to(glassThing.position, { x: -0.01, y: -0.95, duration: 1, ease: 'none' });
             } else {
               tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
               tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' }, '<');
-              tl.set(glassThing.position, { x: -0.14, y: -1.25 }, '+=5');
+              tl.set(glassThing.position, { x: -0.14, y: -1.26 }, '+=5');
               tl.to(glassThing.position, { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' }, '<+=5');
               tl.to(glassThing.position, { x: -0.1, y: -1.75, duration: 1, ease: 'none' });
             }
           }
-          ////------------------3
-          if (child.name === 'Cylinder') {
-            cylinder = scene.getObjectByName('Cylinder');
-            cylinder.material = glassMaterial;
-            cylinder.position.y = desktop ? -0.35 : -0.7;
-            cylinder.position.x = desktop ? -0.06 : -0.08;
-            cylinder.scale.multiplyScalar(desktop ? 1 : 0.8);
-          }
-          if (child.name === 'process_texts') {
-            const process_texts = scene.getObjectByName('process_texts');
-            process_texts.position.y = desktop ? -0.35 : -0.7;
-            process_texts.position.x = desktop ? -0.06 : -0.1;
-            process_texts.scale.multiplyScalar(desktop ? 1 : 0.8);
-          }
-          if (child.name === 'process') {
-            const process = scene.getObjectByName('process');
-            process.position.y = desktop ? -0.35 : -0.7;
-            process.position.x = desktop ? -0.06 : -0.08;
-            process.scale.multiplyScalar(desktop ? 1 : 0.8);
-            // process.material = new THREE.MeshBasicMaterial();
-            // process.material.map = image_cylender_bg;
-            // process.material.alphaMap = image_cylender_bg_alpha;
-            // process.material.alphaTest = 0.99;
 
-            // // process.material.transparent = true;
-            // process.material.depthWrite = false;
-            // process.material.side = THREE.DoubleSide;
-          }
           ////------------------ start
           if (child.name === 'illu_arrows') {
             const illu_arrows = scene.getObjectByName('illu_arrows');
@@ -654,39 +631,72 @@ function init3D() {
           ////------------------2
           if (child.name === 'illu_arrows1') {
             const illu_arrows1 = scene.getObjectByName('illu_arrows1');
-            illu_arrows1.position.y = desktop ? -0.25 : -0.35;
+            illu_arrows1.position.y = desktop ? -0.235 : -0.37;
             illu_arrows1.position.x = desktop ? -0.03 : -0.05;
           }
           if (child.name === 'top_image2') {
             const top_image2 = scene.getObjectByName('top_image2');
-            top_image2.position.y = desktop ? -0.2 : -0.35;
+            top_image2.position.y = desktop ? -0.185 : -0.37;
             top_image2.position.x = desktop ? -0.065 : -0.1;
             top_image2.material = new THREE.MeshBasicMaterial();
             top_image2.material.map = image2;
           }
+          ////------------------3
+          if (child.name === 'Cylinder') {
+            cylinder = scene.getObjectByName('Cylinder');
+            cylinder.material = glassMaterial;
+            cylinder.position.y = desktop ? -0.365 : -0.7;
+            cylinder.position.x = desktop ? -0.06 : -0.08;
+            cylinder.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+          }
+          if (child.name === 'process_texts') {
+            const process_texts = scene.getObjectByName('process_texts');
+            process_texts.position.y = desktop ? -0.365 : -0.7;
+            process_texts.position.x = desktop ? -0.078 : -0.1;
+            process_texts.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+          }
+          if (child.name === 'process') {
+            const process = scene.getObjectByName('process');
+            process.position.y = desktop ? -0.365 : -0.7;
+            process.position.x = desktop ? -0.06 : -0.08;
+            process.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+            // process.material = new THREE.MeshBasicMaterial();
+            // process.material.map = image_cylender_bg;
+            // process.material.alphaMap = image_cylender_bg_alpha;
+            // process.material.alphaTest = 0.99;
+
+            // // process.material.transparent = true;
+            // process.material.depthWrite = false;
+            // process.material.side = THREE.DoubleSide;
+          }
           ////------------------4
           if (child.name === 'top_image3') {
             const top_image3 = scene.getObjectByName('top_image3');
-            top_image3.position.y = desktop ? -0.5 : -1.25;
+            top_image3.position.y = desktop ? -0.55 : -1.27;
+            top_image3.position.x = desktop ? -0.14 : -0.17;
+            top_image3.scale.multiplyScalar(desktop ? 0.6 : 0.8);
             top_image3.material = new THREE.MeshBasicMaterial();
             top_image3.material.map = image3;
           }
           if (child.name === 'illu_arrows2') {
             const illu_arrows2 = scene.getObjectByName('illu_arrows2');
-            illu_arrows2.position.y = desktop ? -0.49 : -1.25;
+            illu_arrows2.position.y = desktop ? -0.53 : -1.25;
+            illu_arrows2.position.x = desktop ? -0.09 : -0.1;
+            illu_arrows2.visible = desktop ? true : false;
           }
           ////------------------5
           if (child.name === 'top_image4') {
             const top_image4 = scene.getObjectByName('top_image4');
-            top_image4.position.y = desktop ? -0.67 : -1.45;
+            top_image4.position.y = desktop ? -0.73 : -1.45;
             top_image4.position.x = desktop ? -0.0054 : -0.1;
+            top_image4.scale.x = 0.3;
             top_image4.material = new THREE.MeshBasicMaterial();
             top_image4.material.map = image4;
           }
           ////------------------6
           if (child.name === 'top_image5') {
             const top_image5 = scene.getObjectByName('top_image5');
-            top_image5.position.y = desktop ? -0.9 : -1.75;
+            top_image5.position.y = desktop ? -0.95 : -1.75;
             top_image5.position.x = desktop ? -0.0054 : -0.1;
             top_image5.material = new THREE.MeshBasicMaterial();
             top_image5.material.map = image5;
@@ -788,14 +798,64 @@ function init3D() {
   }
 
   function scrollbarElementInit() {
+    class ModalPlugin extends ScrollbarPlugin {
+      static pluginName = 'modal';
+
+      static defaultOptions = {
+        open: false,
+      };
+
+      transformDelta(delta) {
+        return this.options.open ? { x: 0, y: 0 } : delta;
+      }
+    }
+
+    Scrollbar.use(ModalPlugin);
+
     scrollBarElement = Scrollbar.init(document.querySelector('.wrapscroll'), {
       continuousScrolling: false,
       alwaysShowTracks: true,
-      damping: desktop ? 0.05 : 0.2,
+      damping: desktop ? 0.05 : 0.1,
       // renderByPixels: true,
       renderByPixels: !('ontouchstart' in document),
     });
   }
+
+  function clickMenuBtn() {
+    const line1 = document.querySelector('.menu1');
+    const line2 = document.querySelector('.menu2');
+    const line3 = document.querySelector('.menu3');
+    const btnMenu = document.querySelector('.menu-button.w-nav-button');
+
+    let tl = gsap.timeline({ paused: true });
+    tl.to(line1, { rotate: 45, y: 0, background: 'white' })
+      .to(line2, { rotate: -45, y: 0, background: 'white' }, 0)
+      .to(line3, { y: 4, opacity: 0, background: 'white' }, 0)
+      .reverse();
+
+    btnMenu.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setTimeout(() => {
+        const links = document.querySelectorAll('.w--nav-link-open');
+        links.forEach((el) => {
+          el.addEventListener('click', () => {
+            tl.reverse();
+            scrollBarElement.updatePluginOptions('modal', { open: false });
+          });
+        });
+      }, 300);
+
+      tl.reversed(!tl.reversed());
+
+      if (btnMenu.classList.contains('w--open')) {
+        scrollBarElement.updatePluginOptions('modal', { open: false });
+      } else {
+        scrollBarElement.updatePluginOptions('modal', { open: true });
+      }
+    });
+  }
+
+  clickMenuBtn();
 
   function onWindowResize() {
     console.log('resize');
