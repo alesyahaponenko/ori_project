@@ -564,7 +564,7 @@ function init3D() {
             const top_image1 = scene.getObjectByName('top_image1');
             top_image1.material = new THREE.MeshBasicMaterial();
             top_image1.scale.multiplyScalar(desktop ? 0.85 : 1);
-            top_image1.position.y = desktop ? 0.015 : -0.37;
+            top_image1.position.y = desktop ? 0.015 : 0.015;
             top_image1.material.map = image1;
           }
           ////------------------2
