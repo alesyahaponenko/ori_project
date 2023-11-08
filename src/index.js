@@ -1,3 +1,4 @@
+import * as dat from 'dat.gui';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -305,6 +306,8 @@ function newsGallery() {
 
 function init3D() {
   gsap.registerPlugin(ScrollTrigger);
+  THREE.Cache.enabled = true;
+  const gui = new dat.GUI();
 
   let stats;
   let camera, scene, renderer;
@@ -570,6 +573,7 @@ function init3D() {
           ////------------------2
           if (child.name === 'illu_arrows1') {
             const illu_arrows1 = scene.getObjectByName('illu_arrows1');
+            // illu_arrows1.material = new THREE.MeshBasicMaterial();
             illu_arrows1.position.x = desktop ? -0.025 : -0.05;
             illu_arrows1.position.y = desktop ? -0.225 : -0.37;
             illu_arrows1.scale.multiplyScalar(desktop ? 0.85 : 1);
@@ -592,12 +596,14 @@ function init3D() {
           }
           if (child.name === 'process_texts') {
             const process_texts = scene.getObjectByName('process_texts');
+            // process_texts.material = new THREE.MeshBasicMaterial();
             process_texts.position.y = desktop ? -0.37 : -0.7;
             process_texts.position.x = desktop ? -0.07 : -0.1;
             process_texts.scale.multiplyScalar(desktop ? 0.7 : 0.8);
           }
           if (child.name === 'process') {
             const process = scene.getObjectByName('process');
+            // process.material = new THREE.MeshBasicMaterial();
             process.position.y = desktop ? -0.37 : -0.7;
             process.position.x = desktop ? -0.055 : -0.08;
             process.scale.multiplyScalar(desktop ? 0.7 : 0.8);
@@ -611,6 +617,7 @@ function init3D() {
             // process.material.side = THREE.DoubleSide;
           }
           ////------------------4
+
           if (child.name === 'top_image3') {
             const top_image3 = scene.getObjectByName('top_image3');
             top_image3.position.y = desktop ? -0.575 : -1.27;
@@ -621,26 +628,59 @@ function init3D() {
           }
           if (child.name === 'illu_arrows2') {
             const illu_arrows2 = scene.getObjectByName('illu_arrows2');
+            // illu_arrows2.material = new THREE.MeshBasicMaterial();
             illu_arrows2.position.y = desktop ? -0.53 : -1.25;
             illu_arrows2.position.x = desktop ? -0.09 : -0.1;
             illu_arrows2.visible = desktop ? false : false;
           }
           ////------------------5
+          const options = {
+            yPos1: -0.73,
+            xPos1: 0,
+            scale1: 1,
+            yPos2: -0.95,
+            xPos2: 0,
+            scale2: 1,
+          };
           if (child.name === 'top_image4') {
             const top_image4 = scene.getObjectByName('top_image4');
-            top_image4.position.y = desktop ? -0.73 : -1.45;
-            top_image4.position.x = desktop ? -0.0054 : -0.1;
-            top_image4.scale.x = 0.3;
+            // top_image4.position.y = desktop ? -0.73 : -1.45;
+            // top_image4.position.x = desktop ? -0.0054 : -0.1;
+            top_image4.position.y = desktop ? options.yPos1 : -1.45;
+            top_image4.position.x = desktop ? options.xPos1 : 0;
+            // top_image4.scale.x = 0.3;
             top_image4.material = new THREE.MeshBasicMaterial();
             top_image4.material.map = image4;
+
+            function onUpdate() {
+              top_image4.position.y = options.yPos1;
+              top_image4.position.x = options.xPos1;
+              top_image4.scale.set(options.scale1, options.scale1, options.scale1);
+            }
+
+            gui.add(options, 'yPos1', -1, -0.6, 0.001).onChange(onUpdate);
+            gui.add(options, 'xPos1', -0.5, 0.5, 0.001).onChange(onUpdate);
+            gui.add(options, 'scale1', 0.1, 1.8, 0.01).onChange(onUpdate);
           }
           ////------------------6
           if (child.name === 'top_image5') {
             const top_image5 = scene.getObjectByName('top_image5');
-            top_image5.position.y = desktop ? -0.95 : -1.75;
-            top_image5.position.x = desktop ? -0.0054 : -0.1;
+            // top_image5.position.y = desktop ? -0.95 : -1.75;
+            // top_image5.position.x = desktop ? -0.0054 : -0.1;
+            top_image5.position.y = desktop ? options.yPos2 : -1.45;
+            top_image5.position.x = desktop ? options.xPos2 : 0;
             top_image5.material = new THREE.MeshBasicMaterial();
             top_image5.material.map = image5;
+
+            function onUpdate() {
+              top_image5.position.y = options.yPos2;
+              top_image5.position.x = options.xPos2;
+              top_image5.scale.set(options.scale2, options.scale2, options.scale2);
+            }
+
+            gui.add(options, 'yPos2', -2, -0.6, 0.001).onChange(onUpdate);
+            gui.add(options, 'xPos2', -0.5, 0.5, 0.001).onChange(onUpdate);
+            gui.add(options, 'scale2', 0.1, 1.8, 0.01).onChange(onUpdate);
           }
         });
 
@@ -682,6 +722,8 @@ function init3D() {
     const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x080808, 2.2);
     scene.add(hemisphereLight);
 
+    hemisphereLight.intensity = desktop ? 2.2 : 6;
+
     directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.set(1024, 1024);
@@ -693,6 +735,8 @@ function init3D() {
     directionalLight.position.set(0.2, 0.1, -0.5);
     scene.add(directionalLight);
 
+    directionalLight.visible = desktop ? true : false;
+
     directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight2.castShadow = true;
     directionalLight2.shadow.mapSize.set(1024, 1024);
@@ -703,6 +747,8 @@ function init3D() {
     directionalLight2.shadow.camera.bottom = -7;
     directionalLight2.position.set(-0.4, 0.1, -0.5);
     scene.add(directionalLight2);
+
+    directionalLight2.visible = desktop ? true : false;
 
     if (desktop === true) {
       document.onmousemove = function (e) {
@@ -849,6 +895,6 @@ function init3D() {
     // }
 
     renderer.render(scene, camera);
-    stats.update();
+    // stats.update();
   }
 }
