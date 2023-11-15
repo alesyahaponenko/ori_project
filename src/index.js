@@ -307,7 +307,8 @@ function newsGallery() {
 
 function init3D() {
   gsap.registerPlugin(ScrollTrigger);
-  ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+  const wrapscroll = document.querySelector('.wrapscroll');
+  ScrollTrigger.normalizeScroll({ allowNestedScroll: true, target: [wrapscroll] });
 
   THREE.Cache.enabled = true;
   const gui = new dat.GUI();
