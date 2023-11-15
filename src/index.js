@@ -94,7 +94,6 @@ function portfolioGallery() {
 
 function newsGallery() {
   gsap.registerPlugin(Observer);
-  ScrollTrigger.normalizeScroll({ allowNestedScroll: true});
 
   let animating = false;
   const wrapper = document.querySelector('.wrapp');
@@ -308,6 +307,8 @@ function newsGallery() {
 
 function init3D() {
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+
   THREE.Cache.enabled = true;
   const gui = new dat.GUI();
 
