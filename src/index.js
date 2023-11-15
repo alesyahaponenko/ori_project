@@ -94,6 +94,8 @@ function portfolioGallery() {
 
 function newsGallery() {
   gsap.registerPlugin(Observer);
+  ScrollTrigger.normalizeScroll({ allowNestedScroll: true});
+
   let animating = false;
   const wrapper = document.querySelector('.wrapp');
   const boxes = gsap.utils.toArray('.box');
@@ -846,8 +848,8 @@ function init3D() {
 
     window.addEventListener('resize', onWindowResize, false);
 
-    // scrollbarElementInit();
-    // scrollerProxyInit();
+    scrollbarElementInit();
+    scrollerProxyInit();
   }
 
   function scrollerProxyInit() {
