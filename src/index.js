@@ -50,7 +50,7 @@ function portfolioGallery() {
 
   mm.add('(max-width: 991px)', () => {
     function nextPortfolio() {
-      if (index === allBlocks) return;
+      if (index === allBlocks + 1) return;
 
       if (!animating) {
         animating = true;
@@ -313,7 +313,7 @@ function init3D() {
   let camera, scene, renderer;
   let mixers = [];
   let directionalLight, directionalLight2;
-  let isMobile, desktop;
+  let isMobile, desktop, tablet;
 
   let importedCamera = null;
   let animationPercent = 0;
@@ -357,7 +357,13 @@ function init3D() {
 
   if (isMobile.any()) {
     desktop = false;
+    if (window.innerWidth < 992 && window.innerWidth > 478) {
+      tablet = true;
+    } else {
+      tablet = false;
+    }
   } else {
+    tablet = false;
     desktop = true;
   }
 
@@ -381,7 +387,7 @@ function init3D() {
       100
     );
 
-    desktop ? (camera.position.z = 3) : (camera.position.z = 3);
+    desktop ? (camera.position.z = 10) : (camera.position.z = 3);
 
     const textureLoader = new THREE.TextureLoader();
     const image1 = textureLoader.load(
@@ -491,7 +497,8 @@ function init3D() {
                   camera.updateProjectionMatrix();
                 },
               },
-              y: () => (desktop ? -0.92 : -1.75),
+              // y: () => (desktop ? -0.92 : -1.75),
+              y: () => (desktop ? -0.94 : -1.75),
               ease: 'none',
             });
           }
@@ -550,11 +557,51 @@ function init3D() {
               tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
               tl.to(glassThing.position, { x: -0.01, y: -0.95, duration: 1, ease: 'none' });
             } else {
-              tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
-              tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' }, '<');
-              tl.set(glassThing.position, { x: -0.14, y: -1.26 }, '+=5');
-              tl.to(glassThing.position, { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' }, '<+=5');
-              tl.to(glassThing.position, { x: -0.1, y: -1.75, duration: 1, ease: 'none' });
+              if (tablet) {
+                tl.to(glassThing.position, { x: -0.1, y: -0.4, duration: 3, ease: 'none' });
+                tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' }, '<');
+                tl.set(glassThing.position, { x: -0.14, y: -1.26 }, '+=5');
+                tl.to(
+                  glassThing.position,
+                  { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' },
+                  '<+=5'
+                );
+                tl.to(glassThing.position, { x: -0.1, y: -1.75, duration: 1, ease: 'none' });
+              } else {
+                if (window.innerHeight > 790) {
+                  tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
+                  tl.to(
+                    glassThing.scale,
+                    { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' },
+                    '<'
+                  );
+                  tl.set(glassThing.position, { x: -0.14, y: -1.1 }, '+=5');
+                  tl.to(
+                    glassThing.position,
+                    { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' },
+                    '<+=5'
+                  );
+                  tl.to(
+                    glassThing.position,
+                    { x: -0.1, y: -1.6, duration: 2, ease: 'none' },
+                    '<-=2.5'
+                  );
+                } else {
+                  tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
+                  tl.to(
+                    glassThing.scale,
+                    { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' },
+                    '<'
+                  );
+                  tl.set(glassThing.position, { x: -0.14, y: -1.3 }, '+=5');
+                  tl.to(
+                    glassThing.position,
+                    { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' },
+                    '<+=5'
+                  );
+                  tl.to(glassThing.position, { x: -0.1, y: -1.6, duration: 1, ease: 'none' });
+                }
+              }
             }
           }
 
@@ -566,23 +613,23 @@ function init3D() {
           if (child.name === 'top_image1') {
             const top_image1 = scene.getObjectByName('top_image1');
             top_image1.material = new THREE.MeshBasicMaterial();
-            top_image1.scale.multiplyScalar(desktop ? 0.85 : 1);
-            top_image1.position.y = desktop ? 0.015 : 0.015;
+            top_image1.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.2);
+            top_image1.position.y = 0;
             top_image1.material.map = image1;
           }
           ////------------------2
           if (child.name === 'illu_arrows1') {
             const illu_arrows1 = scene.getObjectByName('illu_arrows1');
             // illu_arrows1.material = new THREE.MeshBasicMaterial();
-            illu_arrows1.position.x = desktop ? -0.025 : -0.05;
-            illu_arrows1.position.y = desktop ? -0.225 : -0.37;
-            illu_arrows1.scale.multiplyScalar(desktop ? 0.85 : 1);
+            illu_arrows1.position.x = desktop ? -0.037 : -0.05;
+            illu_arrows1.position.y = desktop ? -0.21 : -0.42;
+            illu_arrows1.scale.multiplyScalar(desktop ? 0.85 : tablet ? 1 : 1.5);
           }
           if (child.name === 'top_image2') {
             const top_image2 = scene.getObjectByName('top_image2');
-            top_image2.position.y = desktop ? -0.18 : -0.37;
-            top_image2.position.x = desktop ? -0.05 : -0.1;
-            top_image2.scale.multiplyScalar(desktop ? 0.85 : 1);
+            top_image2.position.y = desktop ? -0.185 : tablet ? -0.4 : -0.37;
+            top_image2.position.x = desktop ? -0.06 : -0.1;
+            top_image2.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.3);
             top_image2.material = new THREE.MeshBasicMaterial();
             top_image2.material.map = image2;
           }
@@ -590,23 +637,50 @@ function init3D() {
           if (child.name === 'Cylinder') {
             cylinder = scene.getObjectByName('Cylinder');
             cylinder.material = glassMaterial;
-            cylinder.position.y = desktop ? -0.37 : -0.7;
-            cylinder.position.x = desktop ? -0.055 : -0.08;
-            cylinder.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+            cylinder.position.y = desktop
+              ? -0.36
+              : tablet
+              ? -0.77
+              : window.innerHeight > 790
+              ? -0.68
+              : -0.8;
+            cylinder.position.x = desktop ? -0.07 : -0.08;
+            cylinder.scale.multiplyScalar(
+              desktop ? 0.8 : tablet ? 1.2 : 1
+              // desktop ? (window.innerWidth > 1440 ? 0.7 : 0.8) : 0.8
+            );
           }
           if (child.name === 'process_texts') {
             const process_texts = scene.getObjectByName('process_texts');
             // process_texts.material = new THREE.MeshBasicMaterial();
-            process_texts.position.y = desktop ? -0.37 : -0.7;
-            process_texts.position.x = desktop ? -0.07 : -0.1;
-            process_texts.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+            process_texts.position.y = desktop
+              ? -0.36
+              : tablet
+              ? -0.77
+              : window.innerHeight > 790
+              ? -0.68
+              : -0.8;
+            process_texts.position.x = desktop ? -0.09 : -0.1;
+            process_texts.scale.multiplyScalar(
+              desktop ? 0.8 : tablet ? 1.2 : 1
+              // desktop ? (window.innerWidth > 1440 ? 0.8 : 0.8) : 0.8
+            );
           }
           if (child.name === 'process') {
             const process = scene.getObjectByName('process');
             // process.material = new THREE.MeshBasicMaterial();
-            process.position.y = desktop ? -0.37 : -0.7;
-            process.position.x = desktop ? -0.055 : -0.08;
-            process.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+            process.position.y = desktop
+              ? -0.36
+              : tablet
+              ? -0.77
+              : window.innerHeight > 790
+              ? -0.68
+              : -0.8;
+            process.position.x = desktop ? -0.07 : -0.08;
+            process.scale.multiplyScalar(
+              desktop ? 0.8 : tablet ? 1.2 : 1
+              // desktop ? (window.innerWidth > 1440 ? 1 : 0.8) : 0.8
+            );
             // process.material = new THREE.MeshBasicMaterial();
             // process.material.map = image_cylender_bg;
             // process.material.alphaMap = image_cylender_bg_alpha;
@@ -620,9 +694,16 @@ function init3D() {
 
           if (child.name === 'top_image3') {
             const top_image3 = scene.getObjectByName('top_image3');
-            top_image3.position.y = desktop ? -0.575 : -1.27;
-            top_image3.position.x = desktop ? -0.14 : -0.17;
-            top_image3.scale.multiplyScalar(desktop ? 0.6 : 0.8);
+            // top_image3.position.y = desktop ? -0.54 : -1.27;
+            top_image3.position.y = desktop
+              ? -0.54
+              : tablet
+              ? -1.27
+              : window.innerHeight > 790
+              ? -1.1
+              : -1.3;
+            top_image3.position.x = desktop ? -0.15 : -0.17;
+            top_image3.scale.multiplyScalar(desktop ? 0.7 : 0.8);
             top_image3.material = new THREE.MeshBasicMaterial();
             top_image3.material.map = image3;
           }
@@ -638,9 +719,9 @@ function init3D() {
             yPos1: -0.73,
             xPos1: 0,
             scale1: 1,
-            yPos2: -0.95,
+            yPos2: -0.956,
             xPos2: 0,
-            scale2: 1,
+            scale2: 0.65,
           };
           if (child.name === 'top_image4') {
             const top_image4 = scene.getObjectByName('top_image4');
@@ -661,6 +742,7 @@ function init3D() {
             gui.add(options, 'yPos1', -1, -0.6, 0.001).onChange(onUpdate);
             gui.add(options, 'xPos1', -0.5, 0.5, 0.001).onChange(onUpdate);
             gui.add(options, 'scale1', 0.1, 1.8, 0.01).onChange(onUpdate);
+            gui.close();
           }
           ////------------------6
           if (child.name === 'top_image5') {
@@ -764,8 +846,8 @@ function init3D() {
 
     window.addEventListener('resize', onWindowResize, false);
 
-    scrollbarElementInit();
-    scrollerProxyInit();
+    // scrollbarElementInit();
+    // scrollerProxyInit();
   }
 
   function scrollerProxyInit() {
