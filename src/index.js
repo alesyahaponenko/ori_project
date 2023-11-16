@@ -307,22 +307,16 @@ function newsGallery() {
 
 function init3D() {
   gsap.registerPlugin(ScrollTrigger);
-  ScrollTrigger.config({ ignoreMobileResize: true})
-  // ScrollTrigger.normalizeScroll(true);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   THREE.Cache.enabled = true;
   const gui = new dat.GUI();
 
-  let stats;
   let camera, scene, renderer;
-  let mixers = [];
   let directionalLight, directionalLight2;
   let isMobile, desktop, tablet;
 
   let importedCamera = null;
-  let animationPercent = 0;
-  let totalFrame = 750;
-  let fps = 25;
 
   let scrollBarElement = 0;
   let globalPerc = 0;
@@ -449,7 +443,7 @@ function init3D() {
       side: THREE.DoubleSide,
       color: 0xf2f2f2,
     });
-    // material.map = environmentMap;
+
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
@@ -461,8 +455,6 @@ function init3D() {
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
     loader.load(
-      // resource URL
-      // 'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/6537c71dcc7971f73517c246_model26.glb.txt',
       'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/653e6a923d2acc91d9dbaa4f_model29.glb.txt',
 
       function (gltf) {
@@ -554,12 +546,16 @@ function init3D() {
             if (desktop) {
               tl.to(glassThing.position, { x: -0.05, y: -0.19, duration: 0.7, ease: 'none' });
               tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' }, '<');
-              tl.set(glassThing.position, { x: -0.12, y: -0.55 }, '+=0.6');
-              tl.set(glassThing.scale, { x: 0.8, y: 0.8, z: 0.8 }, '<+=0.6>');
+              tl.set(glassThing.position, { x: -0.12, y: -0.55 }, '+=0.8');
+              tl.set(glassThing.scale, { x: 0.8, y: 0.8, z: 0.8 }, '<');
 
-              tl.to(glassThing.position, { x: -0.03, y: -0.7, duration: 1, ease: 'none' }, '+=0.8');
+              tl.to(
+                glassThing.position,
+                { x: -0.01, y: -0.75, duration: 1, ease: 'none' },
+                '+=0.9'
+              );
               tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
-              tl.to(glassThing.position, { x: -0.01, y: -0.95, duration: 1, ease: 'none' });
+              tl.to(glassThing.position, { x: -0.01, y: -0.99, duration: 1, ease: 'none' });
             } else {
               if (tablet) {
                 tl.to(glassThing.position, { x: -0.1, y: -0.4, duration: 3, ease: 'none' });
@@ -681,18 +677,7 @@ function init3D() {
               ? -0.68
               : -0.8;
             process.position.x = desktop ? -0.07 : -0.08;
-            process.scale.multiplyScalar(
-              desktop ? 0.8 : tablet ? 1.2 : 1
-              // desktop ? (window.innerWidth > 1440 ? 1 : 0.8) : 0.8
-            );
-            // process.material = new THREE.MeshBasicMaterial();
-            // process.material.map = image_cylender_bg;
-            // process.material.alphaMap = image_cylender_bg_alpha;
-            // process.material.alphaTest = 0.99;
-
-            // // process.material.transparent = true;
-            // process.material.depthWrite = false;
-            // process.material.side = THREE.DoubleSide;
+            process.scale.multiplyScalar(desktop ? 0.8 : tablet ? 1.2 : 1);
           }
           ////------------------4
 
@@ -955,32 +940,6 @@ function init3D() {
       cylinder.rotation.x -= desktop ? 0.01 : 0.05;
     }
 
-    // if (camera) {
-    //   camera.position.x = importedCamera.position.x;
-    //   camera.position.y = importedCamera.position.y;
-    //   camera.position.z = importedCamera.position.z;
-    //   camera.rotation.x = importedCamera.rotation.x;
-    //   camera.rotation.y = importedCamera.rotation.y;
-    //   camera.rotation.z = importedCamera.rotation.z;
-    //   camera.updateProjectionMatrix();
-    // }
-
-    // if (scrollBarElement) {
-    //   animationPercent =
-    //     (100 * scrollBarElement.scrollTop) /
-    //     (scrollBarElement.size.content.height - window.innerHeight);
-    //   animationSecond = (animationPercent / 100) * (totalFrame / fps);
-    // } else {
-    //   animationPercent = 0;
-    // }
-
-    // if (scrollBarElement) {
-    //   for (const mixer of mixers) {
-    //     mixer.setTime(animationSecond);
-    //   }
-    // }
-
     renderer.render(scene, camera);
-    // stats.update();
   }
 }
