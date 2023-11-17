@@ -516,7 +516,7 @@ function init3D() {
                 end: () => '+=150%',
                 scrub: true,
                 onUpdate: () => {
-                  glassThing.rotation.z -= desktop ? 0.04 : 0.16;
+                  glassThing.rotation.z -= desktop ? 0.04 : 0.06;
                 },
               },
             });
@@ -527,7 +527,7 @@ function init3D() {
                 end: () => '+=350%',
                 scrub: true,
                 onUpdate: () => {
-                  glassThing.rotation.z -= desktop ? 0.03 : 0.12;
+                  glassThing.rotation.z -= desktop ? 0.03 : 0.03;
                 },
               },
             });
@@ -568,14 +568,11 @@ function init3D() {
                 );
                 tl.to(glassThing.position, { x: -0.1, y: -1.75, duration: 1, ease: 'none' });
               } else {
+                /////////////////////////////////////////////////////////// Height > 790
                 if (window.innerHeight > 790) {
                   tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
-                  tl.to(
-                    glassThing.scale,
-                    { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' },
-                    '<'
-                  );
-                  tl.set(glassThing.position, { x: -0.14, y: -1.1 }, '+=5');
+                  tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
+                  tl.set(glassThing.position, { x: -0.14, y: -1.03 }, '+=5');
                   tl.to(
                     glassThing.position,
                     { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' },
@@ -587,13 +584,10 @@ function init3D() {
                     '<-=2.5'
                   );
                 } else {
+                  /////////////////////////////////////////////////////////// Height < 790
                   tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
-                  tl.to(
-                    glassThing.scale,
-                    { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' },
-                    '<'
-                  );
-                  tl.set(glassThing.position, { x: -0.14, y: -1.3 }, '+=5');
+                  tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
+                  tl.set(glassThing.position, { x: -0.14, y: -1.22 }, '+=5');
                   tl.to(
                     glassThing.position,
                     { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' },
@@ -688,9 +682,10 @@ function init3D() {
               ? -0.54
               : tablet
               ? -1.27
-              : window.innerHeight > 790
-              ? -1.1
-              : -1.3;
+              : //mobile
+              window.innerHeight > 790
+              ? -1.05
+              : -1.25;
             top_image3.position.x = desktop ? -0.15 : -0.17;
             top_image3.scale.multiplyScalar(desktop ? 0.7 : 0.8);
             top_image3.material = new THREE.MeshBasicMaterial();
@@ -728,7 +723,7 @@ function init3D() {
               top_image4.scale.set(options.scale1, options.scale1, options.scale1);
             }
 
-            gui.add(options, 'yPos1', -1, -0.6, 0.001).onChange(onUpdate);
+            gui.add(options, 'yPos1', -2, 1, 0.001).onChange(onUpdate);
             gui.add(options, 'xPos1', -0.5, 0.5, 0.001).onChange(onUpdate);
             gui.add(options, 'scale1', 0.1, 1.8, 0.01).onChange(onUpdate);
             gui.close();
@@ -749,7 +744,7 @@ function init3D() {
               top_image5.scale.set(options.scale2, options.scale2, options.scale2);
             }
 
-            gui.add(options, 'yPos2', -2, -0.6, 0.001).onChange(onUpdate);
+            gui.add(options, 'yPos2', -3, -1.6, 0.001).onChange(onUpdate);
             gui.add(options, 'xPos2', -0.5, 0.5, 0.001).onChange(onUpdate);
             gui.add(options, 'scale2', 0.1, 1.8, 0.01).onChange(onUpdate);
           }
@@ -835,8 +830,10 @@ function init3D() {
 
     window.addEventListener('resize', onWindowResize, false);
 
-    scrollbarElementInit();
-    scrollerProxyInit();
+    if (desktop) {
+      scrollbarElementInit();
+      scrollerProxyInit();
+    }
   }
 
   function scrollerProxyInit() {
