@@ -744,7 +744,7 @@ function init3D() {
               top_image5.scale.set(options.scale2, options.scale2, options.scale2);
             }
 
-            gui.add(options, 'yPos2', -3, -1.6, 0.001).onChange(onUpdate);
+            gui.add(options, 'yPos2', -2, -0.4, 0.001).onChange(onUpdate);
             gui.add(options, 'xPos2', -0.5, 0.5, 0.001).onChange(onUpdate);
             gui.add(options, 'scale2', 0.1, 1.8, 0.01).onChange(onUpdate);
           }
@@ -903,9 +903,9 @@ function init3D() {
       tl.reversed(!tl.reversed());
 
       if (btnMenu.classList.contains('w--open')) {
-        scrollBarElement.updatePluginOptions('modal', { open: false });
+        // scrollBarElement.updatePluginOptions('modal', { open: false });
       } else {
-        scrollBarElement.updatePluginOptions('modal', { open: true });
+        // scrollBarElement.updatePluginOptions('modal', { open: true });
       }
     });
   }
