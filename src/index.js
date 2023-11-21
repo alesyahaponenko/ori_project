@@ -98,32 +98,31 @@ function newsGallery() {
   let animating = false;
   const wrapper = document.querySelector('.wrapp');
   const boxes = gsap.utils.toArray('.box');
-  const loop = horizontalLoop(boxes, { paused: true, paddingRight: 4, draggable: true });
-
-  function startNext() {
-    if (!animating) {
-      animating = true;
-      loop.next({ duration: 0.4, ease: 'power1.inOut' });
+  if (boxes.length > 0) {
+    const loop = horizontalLoop(boxes, { paused: true, paddingRight: 4, draggable: true });
+    function startNext() {
+      if (!animating) {
+        animating = true;
+        loop.next({ duration: 0.4, ease: 'power1.inOut' });
+      }
     }
-  }
-  function startPrev() {
-    if (!animating) {
-      animating = true;
-      loop.previous({ duration: 0.4, ease: 'power1.inOut' });
+    function startPrev() {
+      if (!animating) {
+        animating = true;
+        loop.previous({ duration: 0.4, ease: 'power1.inOut' });
+      }
     }
+    document.querySelector('.btnnext').addEventListener('click', startNext);
+    document.querySelector('.btnprev').addEventListener('click', startPrev);
+    Observer.create({
+      type: 'touch',
+      target: '.collectionlistwrapper4',
+      onLeft: () => startNext(),
+      onRight: () => startPrev(),
+      tolerance: 10,
+      preventDefault: true,
+    });
   }
-
-  document.querySelector('.btnnext').addEventListener('click', startNext);
-  document.querySelector('.btnprev').addEventListener('click', startPrev);
-
-  Observer.create({
-    type: 'touch',
-    target: '.collection-list-wrapper-4.w-dyn-list',
-    onLeft: () => startNext(),
-    onRight: () => startPrev(),
-    tolerance: 10,
-    preventDefault: true,
-  });
 
   function horizontalLoop(items, config) {
     items = gsap.utils.toArray(items);
@@ -572,28 +571,28 @@ function init3D() {
                 if (window.innerHeight > 790) {
                   tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
                   tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
-                  tl.set(glassThing.position, { x: -0.14, y: -1.03 }, '+=5');
+                  tl.set(glassThing.position, { x: -0.14, y: -1.03 }, '+=3');
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' },
+                    { x: -0.1, y: -1.4, duration: 1.4, ease: 'none' },
                     '<+=5'
                   );
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -1.6, duration: 2, ease: 'none' },
+                    { x: -0.1, y: -1.45, duration: 2, ease: 'none' },
                     '<-=2.5'
                   );
                 } else {
                   /////////////////////////////////////////////////////////// Height < 790
                   tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
                   tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
-                  tl.set(glassThing.position, { x: -0.14, y: -1.22 }, '+=5');
+                  tl.set(glassThing.position, { x: -0.14, y: -1.22 }, '+=3');
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' },
-                    '<+=5'
+                    { x: -0.1, y: -1.55, duration: 1.4, ease: 'none' },
+                    '<+=4'
                   );
-                  tl.to(glassThing.position, { x: -0.1, y: -1.6, duration: 1, ease: 'none' });
+                  tl.to(glassThing.position, { x: -0.1, y: -1.7, duration: 1, ease: 'none' });
                 }
               }
             }
