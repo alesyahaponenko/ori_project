@@ -698,54 +698,63 @@ function init3D() {
             illu_arrows2.visible = desktop ? false : false;
           }
           ////------------------5
-          const options = {
-            yPos1: -0.73,
-            xPos1: 0,
-            scale1: 1,
-            yPos2: -0.956,
-            xPos2: 0,
-            scale2: 0.65,
-          };
+          // const options = {
+          //   yPos1: -0.73,
+          //   xPos1: 0,
+          //   scale1: 1,
+          //   yPos2: -0.956,
+          //   xPos2: 0,
+          //   scale2: 0.65,
+          // };
           if (child.name === 'top_image4') {
             const top_image4 = scene.getObjectByName('top_image4');
-            // top_image4.position.y = desktop ? -0.73 : -1.45;
-            // top_image4.position.x = desktop ? -0.0054 : -0.1;
-            top_image4.position.y = desktop ? options.yPos1 : -1.45;
-            top_image4.position.x = desktop ? options.xPos1 : 0;
-            // top_image4.scale.x = 0.3;
+            top_image4.position.y = desktop ? -0.716 : tablet ? -0.73 : -1.444;
+            top_image4.position.x = desktop ? 0.0023 : tablet ? 0.007 : -0.112;
+            // top_image4.position.y = desktop ? options.yPos1 : -1.45;
+            // top_image4.position.x = desktop ? options.xPos1 : 0;
+            top_image4.scale.set(
+              desktop ? 0.988 : tablet ? 0.61 : 0.63,
+              desktop ? 0.988 : tablet ? 0.61 : 0.63,
+              desktop ? 0.988 : tablet ? 0.61 : 0.63
+            );
+
             top_image4.material = new THREE.MeshBasicMaterial();
             top_image4.material.map = image4;
 
-            function onUpdate() {
-              top_image4.position.y = options.yPos1;
-              top_image4.position.x = options.xPos1;
-              top_image4.scale.set(options.scale1, options.scale1, options.scale1);
-            }
+            // function onUpdate() {
+            //   top_image4.position.y = options.yPos1;
+            //   top_image4.position.x = options.xPos1;
+            //   top_image4.scale.set(options.scale1, options.scale1, options.scale1);
+            // }
 
-            gui.add(options, 'yPos1', -2, 1, 0.001).onChange(onUpdate);
-            gui.add(options, 'xPos1', -0.5, 0.5, 0.001).onChange(onUpdate);
-            gui.add(options, 'scale1', 0.1, 1.8, 0.01).onChange(onUpdate);
-            gui.close();
+            // gui.add(options, 'yPos1', -2, 1, 0.001).onChange(onUpdate);
+            // gui.add(options, 'xPos1', -0.5, 0.5, 0.001).onChange(onUpdate);
+            // gui.add(options, 'scale1', 0.1, 1.8, 0.01).onChange(onUpdate);
+            // gui.close();
           }
           ////------------------6
           if (child.name === 'top_image5') {
             const top_image5 = scene.getObjectByName('top_image5');
-            // top_image5.position.y = desktop ? -0.95 : -1.75;
-            // top_image5.position.x = desktop ? -0.0054 : -0.1;
-            top_image5.position.y = desktop ? options.yPos2 : -1.45;
-            top_image5.position.x = desktop ? options.xPos2 : 0;
+            top_image5.position.y = desktop ? -0.914 : tablet ? -0.73 : -1.622;
+            top_image5.position.x = desktop ? 0 : tablet ? 0 : -0.09;
+            // top_image5.position.y = desktop ? options.yPos2 : -1.45;
+            // top_image5.position.x = desktop ? options.xPos2 : 0;
             top_image5.material = new THREE.MeshBasicMaterial();
             top_image5.material.map = image5;
+            top_image5.scale.set(
+              desktop ? 0.85 : tablet ? 0.85 : 0.72,
+              desktop ? 0.85 : tablet ? 0.85 : 0.72,
+              desktop ? 0.85 : tablet ? 0.85 : 0.72
+            );
+            // function onUpdate() {
+            //   top_image5.position.y = options.yPos2;
+            //   top_image5.position.x = options.xPos2;
+            //   top_image5.scale.set(options.scale2, options.scale2, options.scale2);
+            // }
 
-            function onUpdate() {
-              top_image5.position.y = options.yPos2;
-              top_image5.position.x = options.xPos2;
-              top_image5.scale.set(options.scale2, options.scale2, options.scale2);
-            }
-
-            gui.add(options, 'yPos2', -2, -0.4, 0.001).onChange(onUpdate);
-            gui.add(options, 'xPos2', -0.5, 0.5, 0.001).onChange(onUpdate);
-            gui.add(options, 'scale2', 0.1, 1.8, 0.01).onChange(onUpdate);
+            // gui.add(options, 'yPos2', -2, -0.4, 0.001).onChange(onUpdate);
+            // gui.add(options, 'xPos2', -0.5, 0.5, 0.001).onChange(onUpdate);
+            // gui.add(options, 'scale2', 0.1, 1.8, 0.01).onChange(onUpdate);
           }
         });
 
