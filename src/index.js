@@ -309,7 +309,7 @@ function init3D() {
   ScrollTrigger.config({ ignoreMobileResize: true });
 
   THREE.Cache.enabled = true;
-  const gui = new dat.GUI();
+  // const gui = new dat.GUI();
 
   let camera, scene, renderer;
   let directionalLight, directionalLight2;
@@ -714,8 +714,8 @@ function init3D() {
             // top_image4.position.x = desktop ? options.xPos1 : 0;
             top_image4.scale.set(
               desktop ? 0.988 : tablet ? 0.61 : 0.63,
-              desktop ? 0.988 : tablet ? 0.61 : 0.63,
-              desktop ? 0.988 : tablet ? 0.61 : 0.63
+              desktop ? 0.76 : tablet ? 0.61 : 0.63,
+              desktop ? 0.76 : tablet ? 0.61 : 0.63
             );
 
             top_image4.material = new THREE.MeshBasicMaterial();
