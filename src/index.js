@@ -852,8 +852,8 @@ function init3D() {
     window.addEventListener('resize', onWindowResize, false);
 
     if (desktop) {
-      scrollbarElementInit();
-      scrollerProxyInit();
+      // scrollbarElementInit();
+      // scrollerProxyInit();
     }
   }
 
