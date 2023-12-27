@@ -721,14 +721,20 @@ function init3D() {
           // };
           if (child.name === 'top_image4') {
             const top_image4 = scene.getObjectByName('top_image4');
-            top_image4.position.y = desktop ? -0.716 : tablet ? -0.73 : -1.437;
+            top_image4.position.y = -1.42;
+            if (desktop) {
+              top_image4.position.y = -0.716;
+            }
+            if (tablet) {
+              top_image4.position.y = -0.73;
+            }
             top_image4.position.x = desktop ? 0.0023 : tablet ? 0.007 : -0.193;
             // top_image4.position.y = desktop ? options.yPos1 : options.yPos1;
             // top_image4.position.x = desktop ? options.xPos1 : options.yPos1;
             top_image4.scale.set(
-              desktop ? 0.329 : tablet ? 0.61 : 0.76,
-              desktop ? 0.253 : tablet ? 0.61 : 0.76,
-              desktop ? 0.253 : tablet ? 0.61 : 0.76
+              desktop ? 0.329 : tablet ? 0.61 : 0,
+              desktop ? 0.253 : tablet ? 0.61 : 0,
+              desktop ? 0.253 : tablet ? 0.61 : 0
             );
 
             top_image4.material = new THREE.MeshBasicMaterial();
