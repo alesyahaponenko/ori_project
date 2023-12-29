@@ -12,9 +12,22 @@ window.Webflow ||= [];
 window.Webflow.push(() => {
   newsGallery();
   portfolioGallery();
+  portfolioHover();
   init3D();
   sizes();
 });
+
+function portfolioHover() {
+  const blockPortfolioHover = document.querySelectorAll('.grid-wrap .blockportfolio');
+  blockPortfolioHover.forEach((el) => {
+    el.addEventListener('mouseenter', () => {
+      el.classList.add('hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      el.classList.remove('hover');
+    });
+  });
+}
 
 function sizes() {
   const newsblock_inner = document.querySelectorAll('.newsblock_inner');
@@ -29,12 +42,12 @@ function sizes() {
 }
 
 function portfolioGallery() {
-  const portfWrapp = document.querySelector('.portfolio-wrap');
+  const portfWrapp = document.querySelector('.grid-wrap');
   const btnnext = document.querySelector('.btnnext-portfolio');
   const btnprev = document.querySelector('.btnprev-portfolio');
   btnnext.addEventListener('click', () => {
     gsap.to(portfWrapp, {
-      x: '-60vw',
+      x: '-80em',
       duration: 0.5,
       onComplete: () => {
         btnnext.style.display = 'none';
@@ -59,7 +72,7 @@ function portfolioGallery() {
   let index = 0;
   let animating = false;
 
-  const allBlocks = document.querySelectorAll('.blockportfolio').length - 2;
+  const allBlocks = document.querySelectorAll('.stack_mob .blockportfolio').length - 2;
 
   mm.add('(max-width: 991px)', () => {
     function nextPortfolio() {
@@ -68,7 +81,7 @@ function portfolioGallery() {
       if (!animating) {
         animating = true;
         index++;
-        gsap.to('.portfolio-wrap', {
+        gsap.to('.grid-wrap', {
           x: () => ((-71 * window.innerWidth - 10) * index) / 100,
           duration: 1,
           onComplete: () => {
@@ -83,7 +96,7 @@ function portfolioGallery() {
 
       if (!animating) {
         animating = true;
-        gsap.to('.portfolio-wrap', {
+        gsap.to('.grid-wrap', {
           x: () => (-71 * window.innerWidth * (index - 1)) / 100,
           duration: 1,
           onComplete: () => {
@@ -190,7 +203,7 @@ function newsGallery() {
           widths[i] = parseFloat(gsap.getProperty(el, 'width', 'px'));
           xPercents[i] = snap(
             (parseFloat(gsap.getProperty(el, 'x', 'px')) / widths[i]) * 100 +
-            gsap.getProperty(el, 'xPercent')
+              gsap.getProperty(el, 'xPercent')
           );
           b2 = el.getBoundingClientRect();
           spaceBefore[i] = b2.left - (i ? b1.right : b1.left);
@@ -441,15 +454,6 @@ function init3D() {
     );
     image5.colorSpace = THREE.SRGBColorSpace;
 
-    const environmentMap = textureLoader.load(
-      'https://uploads-ssl.webflow.com/64d1b088ae1023bd1808920b/64d3c2368c7c50fd2896c33e_2.jpg'
-    );
-    environmentMap.mapping = THREE.EquirectangularReflectionMapping;
-    environmentMap.colorSpace = THREE.SRGBColorSpace;
-
-    stats = new Stats();
-    // document.body.appendChild(stats.dom);
-
     const geometry = new THREE.BoxGeometry(5, 32, 32);
     const material = new THREE.MeshBasicMaterial({
       side: THREE.DoubleSide,
@@ -480,7 +484,6 @@ function init3D() {
           thickness: 0.086,
           ior: 1.23,
           clearcoat: 1,
-          envMap: environmentMap,
           envMapIntensity: 1.5,
         });
 
@@ -646,10 +649,10 @@ function init3D() {
             cylinder.position.y = desktop
               ? -0.36
               : tablet
-                ? -0.77
-                : window.innerHeight > 790
-                  ? -0.68
-                  : -0.8;
+              ? -0.77
+              : window.innerHeight > 790
+              ? -0.68
+              : -0.8;
             cylinder.position.x = desktop ? -0.07 : -0.08;
             cylinder.scale.multiplyScalar(
               desktop ? 0.8 : tablet ? 1.2 : 1
@@ -662,10 +665,10 @@ function init3D() {
             process_texts.position.y = desktop
               ? -0.36
               : tablet
-                ? -0.77
-                : window.innerHeight > 790
-                  ? -0.68
-                  : -0.8;
+              ? -0.77
+              : window.innerHeight > 790
+              ? -0.68
+              : -0.8;
             process_texts.position.x = desktop ? -0.09 : -0.1;
             process_texts.scale.multiplyScalar(
               desktop ? 0.8 : tablet ? 1.2 : 1
@@ -678,10 +681,10 @@ function init3D() {
             process.position.y = desktop
               ? -0.36
               : tablet
-                ? -0.77
-                : window.innerHeight > 790
-                  ? -0.68
-                  : -0.8;
+              ? -0.77
+              : window.innerHeight > 790
+              ? -0.68
+              : -0.8;
             process.position.x = desktop ? -0.07 : -0.08;
             process.scale.multiplyScalar(desktop ? 0.8 : tablet ? 1.2 : 1);
           }
@@ -693,11 +696,11 @@ function init3D() {
             top_image3.position.y = desktop
               ? -0.54
               : tablet
-                ? -1.27
-                : //mobile
-                window.innerHeight > 790
-                  ? -1.05
-                  : -1.25;
+              ? -1.27
+              : //mobile
+              window.innerHeight > 790
+              ? -1.05
+              : -1.25;
             top_image3.position.x = desktop ? -0.15 : -0.17;
             top_image3.scale.multiplyScalar(desktop ? 0.7 : 0.8);
             top_image3.material = new THREE.MeshBasicMaterial();
@@ -732,9 +735,9 @@ function init3D() {
             // top_image4.position.y = desktop ? options.yPos1 : options.yPos1;
             // top_image4.position.x = desktop ? options.xPos1 : options.yPos1;
             top_image4.scale.set(
-              desktop ? 0.329 : tablet ? 0.61 : 0,
-              desktop ? 0.253 : tablet ? 0.61 : 0,
-              desktop ? 0.253 : tablet ? 0.61 : 0
+              desktop ? 0.329 : tablet ? 0 : 0,
+              desktop ? 0.253 : tablet ? 0 : 0,
+              desktop ? 0.253 : tablet ? 0 : 0
             );
 
             top_image4.material = new THREE.MeshBasicMaterial();
@@ -761,9 +764,9 @@ function init3D() {
             top_image5.material = new THREE.MeshBasicMaterial();
             top_image5.material.map = image5;
             top_image5.scale.set(
-              desktop ? 0.45 : tablet ? 0.45 : 0.42,
-              desktop ? 0.45 : tablet ? 0.45 : 0.42,
-              desktop ? 0.45 : tablet ? 0.45 : 0.42
+              desktop ? 0.45 : tablet ? 0 : 0,
+              desktop ? 0.45 : tablet ? 0 : 0,
+              desktop ? 0.45 : tablet ? 0 : 0
             );
             // function onUpdate() {
             //   top_image5.position.y = options.yPos2;
