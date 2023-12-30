@@ -6,7 +6,6 @@ import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import Stats from 'three/examples/jsm/libs/stats.module.js';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
