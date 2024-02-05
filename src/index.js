@@ -46,7 +46,7 @@ function portfolioGallery() {
   const btnprev = document.querySelector('.btnprev-portfolio');
   btnnext.addEventListener('click', () => {
     gsap.to(portfWrapp, {
-      x: '-80em',
+      x: () => (window.innerWidth > 1440 ? '-120em' : '-100em'),
       duration: 0.5,
       onComplete: () => {
         btnnext.style.display = 'none';
@@ -81,8 +81,8 @@ function portfolioGallery() {
         animating = true;
         index++;
         gsap.to('.grid-wrap', {
-          x: () => ((-71 * window.innerWidth - 10) * index) / 100,
-          duration: 1,
+          x: () => ((-71.5 * window.innerWidth - 10) * index) / 100,
+          duration: 0.5,
           onComplete: () => {
             animating = false;
           },
@@ -96,8 +96,8 @@ function portfolioGallery() {
       if (!animating) {
         animating = true;
         gsap.to('.grid-wrap', {
-          x: () => (-71 * window.innerWidth * (index - 1)) / 100,
-          duration: 1,
+          x: () => (-71.5 * window.innerWidth * (index - 1)) / 100,
+          duration: 0.5,
           onComplete: () => {
             index--;
             animating = false;
@@ -202,7 +202,7 @@ function newsGallery() {
           widths[i] = parseFloat(gsap.getProperty(el, 'width', 'px'));
           xPercents[i] = snap(
             (parseFloat(gsap.getProperty(el, 'x', 'px')) / widths[i]) * 100 +
-              gsap.getProperty(el, 'xPercent')
+            gsap.getProperty(el, 'xPercent')
           );
           b2 = el.getBoundingClientRect();
           spaceBefore[i] = b2.left - (i ? b1.right : b1.left);
@@ -413,19 +413,19 @@ function init3D() {
 
     const textureLoader = new THREE.TextureLoader();
     const image1 = textureLoader.load(
-      'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/652d83c05a83161b15eea379_image1.jpg'
+      'https://uploads-ssl.webflow.com/64db21b0598aafe863e53d0d/65bf948e9520b0454eddbda4_top_image_v20.png'
     );
     image1.colorSpace = THREE.SRGBColorSpace;
     image1.flipY = false;
 
     const image_cylender_bg = textureLoader.load(
-      'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/653e65903d2acc91d9d64c0c_cylender_bg.png'
+      'https://uploads-ssl.webflow.com/64db21b0598aafe863e53d0d/65bfa9f99f9a45d45edc5ade_process%20simplied_v20.png'
     );
     image_cylender_bg.colorSpace = THREE.SRGBColorSpace;
     image_cylender_bg.flipY = false;
 
     const image_cylender_bg_alpha = textureLoader.load(
-      'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/653e6880ae6bc5934492d30e_cylynder_alpha.jpg'
+      'https://uploads-ssl.webflow.com/64db21b0598aafe863e53d0d/65bfadcdbe8065401aabc3b4_process%20simplied_v20.jpg'
     );
     image_cylender_bg_alpha.colorSpace = THREE.SRGBColorSpace;
     image_cylender_bg_alpha.flipY = false;
@@ -470,7 +470,8 @@ function init3D() {
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     loader.setDRACOLoader(dracoLoader);
     loader.load(
-      'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/653e6a923d2acc91d9dbaa4f_model29.glb.txt',
+      // 'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/653e6a923d2acc91d9dbaa4f_model29.glb.txt',
+      'https://uploads-ssl.webflow.com/64db21b0598aafe863e53d0d/65bfba6fc537eb1c03b19f1a_scroll_animation_v16-------rework2.glb.txt',
 
       function (gltf) {
         scene.add(gltf.scene);
@@ -501,24 +502,21 @@ function init3D() {
               scrollTrigger: {
                 trigger: '.wrapscroll',
                 start: 'top top',
-                end: () => '+=500%',
-                scrub: true,
+                end: () => '+=700%',
+                scrub: 0,
                 onUpdate: () => {
                   camera.updateProjectionMatrix();
                 },
               },
               // y: () => (desktop ? -0.92 : -1.75),
-              y: () => (desktop ? -0.94 : -1.75),
+              y: () => (desktop ? -1.31 : -2.45),
               ease: 'none',
             });
           }
 
-          if (child.name === 'bg_full') {
-            const bg_full = scene.getObjectByName('bg_full');
-            bg_full.visible = false;
-          }
           if (child.name === 'glassThing') {
             glassThing = scene.getObjectByName('glassThing');
+            // glassThing.visible = false;
             glassThing.material = glassMaterial;
             glassThing.position.x = desktop ? -0.13 : -0.13;
             glassThing.material.side = THREE.DoubleSide;
@@ -527,30 +525,30 @@ function init3D() {
               scrollTrigger: {
                 trigger: '.wrapscroll',
                 start: 'top top',
-                end: () => '+=150%',
+                end: () => '+=700%',
                 scrub: true,
                 onUpdate: () => {
                   glassThing.rotation.z -= desktop ? 0.04 : 0.06;
                 },
               },
             });
-            gsap.to(glassThing.rotation, {
-              scrollTrigger: {
-                trigger: '.start2',
-                start: 'top top',
-                end: () => '+=350%',
-                scrub: true,
-                onUpdate: () => {
-                  glassThing.rotation.z -= desktop ? 0.03 : 0.03;
-                },
-              },
-            });
+            // gsap.to(glassThing.rotation, {
+            //   scrollTrigger: {
+            //     trigger: '.start2',
+            //     start: 'top top',
+            //     end: () => '+=450%',
+            //     scrub: true,
+            //     onUpdate: () => {
+            //       glassThing.rotation.z -= desktop ? 0.03 : 0.03;
+            //     },
+            //   },
+            // });
 
             let tl = gsap.timeline({
               scrollTrigger: {
                 trigger: '.wrapscroll',
                 start: 'top top',
-                end: () => '+=500%',
+                end: () => '+=550%',
                 scrub: true,
                 onUpdate: () => {
                   glassThing.rotation.z -= 0.02;
@@ -558,29 +556,62 @@ function init3D() {
               },
             });
             if (desktop) {
-              tl.to(glassThing.position, { x: -0.05, y: -0.19, duration: 0.7, ease: 'none' });
-              tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' }, '<');
-              tl.set(glassThing.position, { x: -0.12, y: -0.55 }, '+=0.8');
-              tl.set(glassThing.scale, { x: 0.8, y: 0.8, z: 0.8 }, '<');
+              tl.to(glassThing.position, { x: -0.14, y: -0.21, duration: 0.5, ease: 'none' });
+              tl.to(glassThing.scale, { x: 0.9, y: 0.9, z: 0.9, duration: 0.5, ease: 'none' }, '<');
+              tl.to(
+                glassThing.position,
+                { x: -0.07, y: -0.38, duration: 0.5, ease: 'none' },
+                '+=0.3'
+              );
+              tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 0.5, ease: 'none' }, '<');
+
+              tl.set(glassThing.position, { x: 0.03, y: -0.73 }, '+=0.8');
+              tl.set(glassThing.scale, { x: 1, y: 1, z: 1 }, '<');
 
               tl.to(
                 glassThing.position,
-                { x: -0.01, y: -0.75, duration: 1, ease: 'none' },
-                '+=0.9'
+                { x: 0.03, y: -0.73, duration: 0.4, ease: 'none' },
+                '+=0.3'
               );
-              tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
-              tl.to(glassThing.position, { x: -0.01, y: -0.93, duration: 1, ease: 'none' });
+
+              tl.to(glassThing.position, { x: -0.03, y: -1.1, duration: 1, ease: 'none' }, '+=0.5');
             } else {
               if (tablet) {
-                tl.to(glassThing.position, { x: -0.1, y: -0.4, duration: 3, ease: 'none' });
-                tl.to(glassThing.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1, ease: 'none' }, '<');
-                tl.set(glassThing.position, { x: -0.14, y: -1.26 }, '+=5');
                 tl.to(
                   glassThing.position,
-                  { x: -0.1, y: -1.5, duration: 1.4, ease: 'none' },
-                  '<+=5'
+                  { x: -0.17, y: -0.39, duration: 0.5, ease: 'none' },
+                  '+=0.4'
                 );
-                tl.to(glassThing.position, { x: -0.1, y: -1.75, duration: 1, ease: 'none' });
+                tl.to(
+                  glassThing.scale,
+                  { x: 0.9, y: 0.9, z: 0.9, duration: 0.5, ease: 'none' },
+                  '<'
+                );
+                tl.to(
+                  glassThing.position,
+                  { x: -0.1, y: -0.72, duration: 0.5, ease: 'none' },
+                  '+=0.8'
+                );
+                tl.to(
+                  glassThing.scale,
+                  { x: 0.6, y: 0.6, z: 0.6, duration: 0.5, ease: 'none' },
+                  '<'
+                );
+
+                tl.set(glassThing.position, { x: -0.08, y: -1.25 }, '+=1.2');
+                tl.set(glassThing.scale, { x: 1, y: 1, z: 1 }, '<');
+
+                tl.to(
+                  glassThing.position,
+                  { x: -0.08, y: -1.5, duration: 0.4, ease: 'none' },
+                  '+=0.8'
+                );
+
+                tl.to(
+                  glassThing.position,
+                  { x: -0.08, y: -1.75, duration: 1, ease: 'none' },
+                  '+=0.5'
+                );
               } else {
                 /////////////////////////////////////////////////////////// Height > 790
                 if (window.innerHeight > 790) {
@@ -590,7 +621,7 @@ function init3D() {
                   tl.to(
                     glassThing.position,
                     { x: -0.1, y: -1.4, duration: 1.4, ease: 'none' },
-                    '<+=5'
+                    '<+=6'
                   );
                   tl.to(
                     glassThing.position,
@@ -599,128 +630,126 @@ function init3D() {
                   );
                 } else {
                   /////////////////////////////////////////////////////////// Height < 790
-                  tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
-                  tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
-                  tl.set(glassThing.position, { x: -0.14, y: -1.22 }, '+=3');
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -1.55, duration: 1.4, ease: 'none' },
-                    '<+=4'
+                    { x: -0.17, y: -0.39, duration: 0.5, ease: 'none' },
+                    '+=0.7'
                   );
-                  tl.to(glassThing.position, { x: -0.1, y: -1.7, duration: 1, ease: 'none' });
+                  tl.to(
+                    glassThing.scale,
+                    { x: 0.9, y: 0.9, z: 0.9, duration: 0.5, ease: 'none' },
+                    '<'
+                  );
+                  tl.to(
+                    glassThing.position,
+                    { x: -0.1, y: -0.72, duration: 0.5, ease: 'none' },
+                    '+=1'
+                  );
+                  tl.to(
+                    glassThing.scale,
+                    { x: 0.6, y: 0.6, z: 0.6, duration: 0.5, ease: 'none' },
+                    '<'
+                  );
+
+                  tl.set(glassThing.position, { x: -0.08, y: -1.35 }, '+=1.8');
+                  tl.set(glassThing.scale, { x: 1, y: 1, z: 1 }, '<');
+
+                  tl.to(
+                    glassThing.position,
+                    { x: -0.08, y: -1.6, duration: 0.4, ease: 'none' },
+                    '+=2'
+                  );
+
+                  tl.to(
+                    glassThing.position,
+                    { x: -0.08, y: -1.9, duration: 1, ease: 'none' },
+                    '+=0.5'
+                  );
                 }
               }
             }
           }
 
           ////------------------ start
-          if (child.name === 'illu_arrows') {
-            const illu_arrows = scene.getObjectByName('illu_arrows');
-            illu_arrows.visible = false;
-          }
           if (child.name === 'top_image1') {
             const top_image1 = scene.getObjectByName('top_image1');
             top_image1.material = new THREE.MeshBasicMaterial();
-            top_image1.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.2);
-            top_image1.position.y = 0;
+            top_image1.scale.x = 0.065;
+            top_image1.scale.z = 0.085;
+            // top_image1.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.2);
+            top_image1.position.y = -0.0085;
+            top_image1.position.x = -0.085;
             top_image1.material.map = image1;
           }
-          ////------------------2
-          if (child.name === 'illu_arrows1') {
-            const illu_arrows1 = scene.getObjectByName('illu_arrows1');
-            // illu_arrows1.material = new THREE.MeshBasicMaterial();
-            illu_arrows1.position.x = desktop ? -0.037 : -0.05;
-            illu_arrows1.position.y = desktop ? -0.21 : -0.42;
-            illu_arrows1.scale.multiplyScalar(desktop ? 0.85 : tablet ? 1 : 1.5);
+          ////------------------2 el
+          if (child.name === 'top_image3') {
+            const top_image3 = scene.getObjectByName('top_image3');
+            top_image3.position.y = desktop
+              ? -0.22
+              : tablet
+                ? -0.4
+                : //mobile
+                window.innerHeight > 790
+                  ? -0.43
+                  : -0.43;
+
+            top_image3.position.x = desktop ? -0.17 : -0.2;
+            top_image3.scale.multiplyScalar(desktop ? 0.7 : 0.8);
+            top_image3.material = new THREE.MeshBasicMaterial();
+            top_image3.material.map = image3;
           }
+          ////------------------3
           if (child.name === 'top_image2') {
             const top_image2 = scene.getObjectByName('top_image2');
-            top_image2.position.y = desktop ? -0.185 : tablet ? -0.4 : -0.37;
+            // top_image2.position.y = -0.38;
+            top_image2.position.y = desktop ? -0.38 : tablet ? -0.72 : -0.74;
             top_image2.position.x = desktop ? -0.06 : -0.1;
             top_image2.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.3);
             top_image2.material = new THREE.MeshBasicMaterial();
             top_image2.material.map = image2;
           }
-          ////------------------3
+          ////------------------4
           if (child.name === 'Cylinder') {
             cylinder = scene.getObjectByName('Cylinder');
             cylinder.material = glassMaterial;
             cylinder.position.y = desktop
-              ? -0.36
+              ? -0.54
               : tablet
-              ? -0.77
-              : window.innerHeight > 790
-              ? -0.68
-              : -0.8;
-            cylinder.position.x = desktop ? -0.07 : -0.08;
+                ? -1.02
+                : window.innerHeight > 790
+                  ? -1.105
+                  : -1.105;
+            cylinder.position.x = desktop ? -0.05 : -0.1;
             cylinder.scale.multiplyScalar(
-              desktop ? 0.8 : tablet ? 1.2 : 1
+              desktop ? 1 : tablet ? 1.2 : 1
               // desktop ? (window.innerWidth > 1440 ? 0.7 : 0.8) : 0.8
             );
           }
           if (child.name === 'process_texts') {
             const process_texts = scene.getObjectByName('process_texts');
-            // process_texts.material = new THREE.MeshBasicMaterial();
-            process_texts.position.y = desktop
-              ? -0.36
-              : tablet
-              ? -0.77
-              : window.innerHeight > 790
-              ? -0.68
-              : -0.8;
-            process_texts.position.x = desktop ? -0.09 : -0.1;
-            process_texts.scale.multiplyScalar(
-              desktop ? 0.8 : tablet ? 1.2 : 1
-              // desktop ? (window.innerWidth > 1440 ? 0.8 : 0.8) : 0.8
-            );
+            process_texts.material = new THREE.MeshBasicMaterial();
+            process_texts.visible = false;
           }
           if (child.name === 'process') {
             const process = scene.getObjectByName('process');
-            // process.material = new THREE.MeshBasicMaterial();
+            process.material = new THREE.MeshBasicMaterial();
+            process.material.alphaTest = 0.1;
+            process.material.side = THREE.DoubleSide;
+            process.material.map = image_cylender_bg;
+            process.material.alphaMap = image_cylender_bg_alpha;
             process.position.y = desktop
-              ? -0.36
+              ? -0.544
               : tablet
-              ? -0.77
-              : window.innerHeight > 790
-              ? -0.68
-              : -0.8;
-            process.position.x = desktop ? -0.07 : -0.08;
-            process.scale.multiplyScalar(desktop ? 0.8 : tablet ? 1.2 : 1);
+                ? -1.02
+                : window.innerHeight > 790
+                  ? -1.105
+                  : -1.105;
+            process.position.x = desktop ? -0.092 : -0.1;
+            process.scale.x = 0.036;
+            process.scale.z = 0.032;
           }
-          ////------------------4
 
-          if (child.name === 'top_image3') {
-            const top_image3 = scene.getObjectByName('top_image3');
-            // top_image3.position.y = desktop ? -0.54 : -1.27;
-            top_image3.position.y = desktop
-              ? -0.54
-              : tablet
-              ? -1.27
-              : //mobile
-              window.innerHeight > 790
-              ? -1.05
-              : -1.25;
-            top_image3.position.x = desktop ? -0.15 : -0.17;
-            top_image3.scale.multiplyScalar(desktop ? 0.7 : 0.8);
-            top_image3.material = new THREE.MeshBasicMaterial();
-            top_image3.material.map = image3;
-          }
-          if (child.name === 'illu_arrows2') {
-            const illu_arrows2 = scene.getObjectByName('illu_arrows2');
-            // illu_arrows2.material = new THREE.MeshBasicMaterial();
-            illu_arrows2.position.y = desktop ? -0.53 : -1.25;
-            illu_arrows2.position.x = desktop ? -0.09 : -0.1;
-            illu_arrows2.visible = desktop ? false : false;
-          }
           ////------------------5
-          // const options = {
-          //   yPos1: -0.73,
-          //   xPos1: 0,
-          //   scale1: 1,
-          //   yPos2: -0.956,
-          //   xPos2: 0,
-          //   scale2: 0.65,
-          // };
           if (child.name === 'top_image4') {
             const top_image4 = scene.getObjectByName('top_image4');
             top_image4.position.y = -1.42;
@@ -731,8 +760,6 @@ function init3D() {
               top_image4.position.y = -0.73;
             }
             top_image4.position.x = desktop ? 0.0023 : tablet ? 0.007 : -0.193;
-            // top_image4.position.y = desktop ? options.yPos1 : options.yPos1;
-            // top_image4.position.x = desktop ? options.xPos1 : options.yPos1;
             top_image4.scale.set(
               desktop ? 0.329 : tablet ? 0 : 0,
               desktop ? 0.253 : tablet ? 0 : 0,
@@ -741,17 +768,6 @@ function init3D() {
 
             top_image4.material = new THREE.MeshBasicMaterial();
             top_image4.material.map = image4;
-
-            // function onUpdate() {
-            //   top_image4.position.y = options.yPos1;
-            //   top_image4.position.x = options.xPos1;
-            //   top_image4.scale.set(options.scale1, options.scale1, options.scale1);
-            // }
-
-            // gui.add(options, 'yPos1', -2, 1, 0.001).onChange(onUpdate);
-            // gui.add(options, 'xPos1', -0.5, 0.5, 0.001).onChange(onUpdate);
-            // gui.add(options, 'scale1', 0.1, 1.8, 0.01).onChange(onUpdate);
-            // gui.close();
           }
           ////------------------6
           if (child.name === 'top_image5') {
@@ -767,15 +783,6 @@ function init3D() {
               desktop ? 0.45 : tablet ? 0 : 0,
               desktop ? 0.45 : tablet ? 0 : 0
             );
-            // function onUpdate() {
-            //   top_image5.position.y = options.yPos2;
-            //   top_image5.position.x = options.xPos2;
-            //   top_image5.scale.set(options.scale2, options.scale2, options.scale2);
-            // }
-
-            // gui.add(options, 'yPos2', -2, -0.4, 0.001).onChange(onUpdate);
-            // gui.add(options, 'xPos2', -0.5, 0.5, 0.001).onChange(onUpdate);
-            // gui.add(options, 'scale2', 0.1, 1.8, 0.01).onChange(onUpdate);
           }
         });
 
