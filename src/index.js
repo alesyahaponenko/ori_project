@@ -46,7 +46,12 @@ function portfolioGallery() {
   const btnprev = document.querySelector('.btnprev-portfolio');
   btnnext.addEventListener('click', () => {
     gsap.to(portfWrapp, {
-      x: () => (window.innerWidth > 1440 ? '-120em' : '-100em'),
+      x: () =>
+        window.innerWidth > 1440
+          ? '-110em'
+          : window.innerWidth < 1440 && window.innerWidth > 1250
+            ? '-80em'
+            : '-98em',
       duration: 0.5,
       onComplete: () => {
         btnnext.style.display = 'none';
@@ -471,7 +476,7 @@ function init3D() {
     loader.setDRACOLoader(dracoLoader);
     loader.load(
       // 'https://uploads-ssl.webflow.com/650aab3968604618ddbe29a0/653e6a923d2acc91d9dbaa4f_model29.glb.txt',
-      'https://uploads-ssl.webflow.com/64db21b0598aafe863e53d0d/65bfba6fc537eb1c03b19f1a_scroll_animation_v16-------rework2.glb.txt',
+      'https://uploads-ssl.webflow.com/64db21b0598aafe863e53d0d/65c0c9147e3131f60daba367_scroll_animation_v16-------rework2.glb.txt',
 
       function (gltf) {
         scene.add(gltf.scene);
@@ -518,7 +523,7 @@ function init3D() {
             glassThing = scene.getObjectByName('glassThing');
             // glassThing.visible = false;
             glassThing.material = glassMaterial;
-            glassThing.position.x = desktop ? -0.13 : -0.13;
+            glassThing.position.x = desktop ? -0.14 : -0.13;
             glassThing.material.side = THREE.DoubleSide;
 
             gsap.to(glassThing.rotation, {
@@ -696,11 +701,11 @@ function init3D() {
           if (child.name === 'top_image1') {
             const top_image1 = scene.getObjectByName('top_image1');
             top_image1.material = new THREE.MeshBasicMaterial();
-            top_image1.scale.x = 0.065;
-            top_image1.scale.z = 0.085;
+            top_image1.scale.x = desktop ? 0.065 : 0.065 * 1.1;
+            top_image1.scale.z = desktop ? 0.085 : 0.085 * 1.1;
             // top_image1.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.2);
             top_image1.position.y = -0.0085;
-            top_image1.position.x = -0.085;
+            top_image1.position.x = desktop ? -0.07 : -0.06;
             top_image1.material.map = image1;
           }
           ////------------------2 el
@@ -730,6 +735,14 @@ function init3D() {
             top_image2.material = new THREE.MeshBasicMaterial();
             top_image2.material.map = image2;
           }
+          if (child.name === 'illu_arrows001') {
+            const illu_arrows = scene.getObjectByName('illu_arrows001');
+            illu_arrows.position.y = desktop ? -0.4 : tablet ? -0.74 : -0.74;
+            illu_arrows.position.x = desktop ? -0.03 : tablet ? -0.05 : -0.05;
+            // illu_arrows.position.y = desktop ? -0.38 : tablet ? -0.72 : -0.74;
+            // illu_arrows.position.x = desktop ? -0.06 : -0.1;
+            // illu_arrows.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.3);
+          }
           ////------------------4
           if (child.name === 'Cylinder') {
             cylinder = scene.getObjectByName('Cylinder');
@@ -739,11 +752,11 @@ function init3D() {
               : tablet
                 ? -1.02
                 : window.innerHeight > 790
-                  ? -1.1
-                  : -1.105;
+                  ? -1.07
+                  : -1.075;
             cylinder.position.x = desktop ? -0.05 : -0.1;
             cylinder.scale.multiplyScalar(
-              desktop ? 1 : tablet ? 1.2 : 1
+              desktop ? 0.9 : tablet ? 1.2 : 1
               // desktop ? (window.innerWidth > 1440 ? 0.7 : 0.8) : 0.8
             );
           }
@@ -764,11 +777,11 @@ function init3D() {
               : tablet
                 ? -1.02
                 : window.innerHeight > 790
-                  ? -1.1
-                  : -1.105;
-            process.position.x = desktop ? -0.092 : -0.1;
-            process.scale.x = 0.036;
-            process.scale.z = 0.032;
+                  ? -1.07
+                  : -1.075;
+            process.position.x = desktop ? -0.08 : -0.1;
+            process.scale.x = 0.033;
+            process.scale.z = 0.03;
           }
 
           ////------------------5
