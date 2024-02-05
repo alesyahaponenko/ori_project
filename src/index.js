@@ -615,18 +615,40 @@ function init3D() {
               } else {
                 /////////////////////////////////////////////////////////// Height > 790
                 if (window.innerHeight > 790) {
-                  tl.to(glassThing.position, { x: -0.1, y: -0.35, duration: 3, ease: 'none' });
-                  tl.to(glassThing.scale, { x: 1, y: 1, z: 1, duration: 1, ease: 'none' }, '<');
-                  tl.set(glassThing.position, { x: -0.14, y: -1.03 }, '+=3');
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -1.4, duration: 1.4, ease: 'none' },
-                    '<+=6'
+                    { x: -0.17, y: -0.39, duration: 0.5, ease: 'none' },
+                    '+=0.7'
+                  );
+                  tl.to(
+                    glassThing.scale,
+                    { x: 0.9, y: 0.9, z: 0.9, duration: 0.5, ease: 'none' },
+                    '<'
                   );
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -1.45, duration: 2, ease: 'none' },
-                    '<-=2.5'
+                    { x: -0.1, y: -0.72, duration: 0.5, ease: 'none' },
+                    '+=1'
+                  );
+                  tl.to(
+                    glassThing.scale,
+                    { x: 0.6, y: 0.6, z: 0.6, duration: 0.5, ease: 'none' },
+                    '<'
+                  );
+
+                  tl.set(glassThing.position, { x: -0.08, y: -1.35 }, '+=1.8');
+                  tl.set(glassThing.scale, { x: 1, y: 1, z: 1 }, '<');
+
+                  tl.to(
+                    glassThing.position,
+                    { x: -0.08, y: -1.6, duration: 0.4, ease: 'none' },
+                    '+=2'
+                  );
+
+                  tl.to(
+                    glassThing.position,
+                    { x: -0.08, y: -1.9, duration: 1, ease: 'none' },
+                    '+=0.5'
                   );
                 } else {
                   /////////////////////////////////////////////////////////// Height < 790
@@ -693,7 +715,7 @@ function init3D() {
                   ? -0.43
                   : -0.43;
 
-            top_image3.position.x = desktop ? -0.17 : -0.2;
+            top_image3.position.x = desktop ? -0.17 : -0.17;
             top_image3.scale.multiplyScalar(desktop ? 0.7 : 0.8);
             top_image3.material = new THREE.MeshBasicMaterial();
             top_image3.material.map = image3;
@@ -717,7 +739,7 @@ function init3D() {
               : tablet
                 ? -1.02
                 : window.innerHeight > 790
-                  ? -1.105
+                  ? -1.1
                   : -1.105;
             cylinder.position.x = desktop ? -0.05 : -0.1;
             cylinder.scale.multiplyScalar(
@@ -742,7 +764,7 @@ function init3D() {
               : tablet
                 ? -1.02
                 : window.innerHeight > 790
-                  ? -1.105
+                  ? -1.1
                   : -1.105;
             process.position.x = desktop ? -0.092 : -0.1;
             process.scale.x = 0.036;
