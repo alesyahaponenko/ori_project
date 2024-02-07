@@ -1,4 +1,3 @@
-import * as dat from 'dat.gui';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -622,7 +621,7 @@ function init3D() {
                 if (window.innerHeight > 790) {
                   tl.to(
                     glassThing.position,
-                    { x: -0.17, y: -0.39, duration: 0.5, ease: 'none' },
+                    { x: -0.17, y: -0.28, duration: 0.5, ease: 'none' },
                     '+=0.7'
                   );
                   tl.to(
@@ -632,7 +631,7 @@ function init3D() {
                   );
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -0.72, duration: 0.5, ease: 'none' },
+                    { x: -0.1, y: -0.56, duration: 0.5, ease: 'none' },
                     '+=1'
                   );
                   tl.to(
@@ -641,25 +640,25 @@ function init3D() {
                     '<'
                   );
 
-                  tl.set(glassThing.position, { x: -0.08, y: -1.35 }, '+=1.8');
+                  tl.set(glassThing.position, { x: -0.08, y: -1.04 }, '+=1');
                   tl.set(glassThing.scale, { x: 1, y: 1, z: 1 }, '<');
 
                   tl.to(
                     glassThing.position,
-                    { x: -0.08, y: -1.6, duration: 0.4, ease: 'none' },
-                    '+=2'
+                    { x: -0.08, y: -1.23, duration: 0.4, ease: 'none' },
+                    '+=1'
                   );
 
                   tl.to(
                     glassThing.position,
-                    { x: -0.08, y: -1.9, duration: 1, ease: 'none' },
-                    '+=0.5'
+                    { x: -0.08, y: -1.6, duration: 1, ease: 'none' },
+                    '+=2'
                   );
                 } else {
                   /////////////////////////////////////////////////////////// Height < 790
                   tl.to(
                     glassThing.position,
-                    { x: -0.17, y: -0.39, duration: 0.5, ease: 'none' },
+                    { x: -0.17, y: -0.33, duration: 0.5, ease: 'none' },
                     '+=0.7'
                   );
                   tl.to(
@@ -669,7 +668,7 @@ function init3D() {
                   );
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -0.72, duration: 0.5, ease: 'none' },
+                    { x: -0.1, y: -0.65, duration: 0.5, ease: 'none' },
                     '+=1'
                   );
                   tl.to(
@@ -678,7 +677,7 @@ function init3D() {
                     '<'
                   );
 
-                  tl.set(glassThing.position, { x: -0.08, y: -1.35 }, '+=1.8');
+                  tl.set(glassThing.position, { x: -0.08, y: -1.22 }, '+=1.8');
                   tl.set(glassThing.scale, { x: 1, y: 1, z: 1 }, '<');
 
                   tl.to(
@@ -704,7 +703,7 @@ function init3D() {
             top_image1.scale.x = desktop ? 0.065 : 0.065 * 1.1;
             top_image1.scale.z = desktop ? 0.085 : 0.085 * 1.1;
             // top_image1.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.2);
-            top_image1.position.y = -0.0085;
+            top_image1.position.y = desktop ? -0.0085 : tablet ? -0.0085 : 0.01;
             top_image1.position.x = desktop ? -0.07 : -0.06;
             top_image1.material.map = image1;
           }
@@ -717,8 +716,8 @@ function init3D() {
                 ? -0.4
                 : //mobile
                 window.innerHeight > 790
-                  ? -0.43
-                  : -0.43;
+                  ? -0.33
+                  : -0.39;
 
             top_image3.position.x = desktop ? -0.17 : -0.17;
             top_image3.scale.multiplyScalar(desktop ? 0.7 : 0.8);
@@ -729,7 +728,13 @@ function init3D() {
           if (child.name === 'top_image2') {
             const top_image2 = scene.getObjectByName('top_image2');
             // top_image2.position.y = -0.38;
-            top_image2.position.y = desktop ? -0.38 : tablet ? -0.72 : -0.74;
+            top_image2.position.y = desktop
+              ? -0.38
+              : tablet
+                ? -0.72
+                : window.innerHeight > 790
+                  ? -0.56
+                  : -0.65;
             top_image2.position.x = desktop ? -0.06 : -0.1;
             top_image2.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.3);
             top_image2.material = new THREE.MeshBasicMaterial();
@@ -737,7 +742,13 @@ function init3D() {
           }
           if (child.name === 'illu_arrows001') {
             const illu_arrows = scene.getObjectByName('illu_arrows001');
-            illu_arrows.position.y = desktop ? -0.4 : tablet ? -0.74 : -0.74;
+            illu_arrows.position.y = desktop
+              ? -0.4
+              : tablet
+                ? -0.74
+                : window.innerHeight > 790
+                  ? -0.58
+                  : -0.67;
             illu_arrows.position.x = desktop ? -0.03 : tablet ? -0.05 : -0.05;
             // illu_arrows.position.y = desktop ? -0.38 : tablet ? -0.72 : -0.74;
             // illu_arrows.position.x = desktop ? -0.06 : -0.1;
@@ -752,8 +763,8 @@ function init3D() {
               : tablet
                 ? -1.02
                 : window.innerHeight > 790
-                  ? -1.07
-                  : -1.075;
+                  ? -0.84
+                  : -0.96;
             cylinder.position.x = desktop ? -0.05 : -0.1;
             cylinder.scale.multiplyScalar(
               desktop ? 0.9 : tablet ? 1.2 : 1
@@ -777,8 +788,8 @@ function init3D() {
               : tablet
                 ? -1.02
                 : window.innerHeight > 790
-                  ? -1.07
-                  : -1.075;
+                  ? -0.84
+                  : -0.96;
             process.position.x = desktop ? -0.08 : -0.1;
             process.scale.x = 0.033;
             process.scale.z = 0.03;
@@ -794,7 +805,7 @@ function init3D() {
             if (tablet) {
               top_image4.position.y = -0.73;
             }
-            top_image4.position.x = desktop ? 0.0023 : tablet ? 0.007 : -0.193;
+            top_image4.position.x = desktop ? 0.05 : tablet ? 0.007 : -0.193;
             top_image4.scale.set(
               desktop ? 0.329 : tablet ? 0 : 0,
               desktop ? 0.253 : tablet ? 0 : 0,
