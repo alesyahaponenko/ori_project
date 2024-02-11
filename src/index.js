@@ -917,11 +917,11 @@ function init3D() {
                   : window.innerHeight < 700
                     ? -0.91
                     : window.innerHeight > 700 && window.innerHeight < 791
-                      ? -0.83
+                      ? -0.855
                       : window.innerHeight > 790 && window.innerHeight < 891
-                        ? -0.78
+                        ? -0.8
                         : window.innerHeight > 890
-                          ? -0.7
+                          ? -0.725
                           : null;
             }
             process.position.x = desktop ? -0.08 : -0.1;
