@@ -869,13 +869,13 @@ function init3D() {
                 : tablet
                   ? -1.02
                   : window.innerHeight < 700
-                    ? -0.91
+                    ? -0.93
                     : window.innerHeight > 700 && window.innerHeight < 791
-                      ? -0.83
+                      ? -0.855
                       : window.innerHeight > 790 && window.innerHeight < 891
-                        ? -0.78
+                        ? -0.8
                         : window.innerHeight > 890
-                          ? -0.7
+                          ? -0.725
                           : null;
             }
             cylinder.position.x = desktop ? -0.05 : -0.1;
@@ -915,7 +915,7 @@ function init3D() {
                 : tablet
                   ? -1.02
                   : window.innerHeight < 700
-                    ? -0.91
+                    ? -0.93
                     : window.innerHeight > 700 && window.innerHeight < 791
                       ? -0.855
                       : window.innerHeight > 790 && window.innerHeight < 891
