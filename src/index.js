@@ -671,7 +671,12 @@ function init3D() {
                   );
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -0.6, duration: 0.5, ease: 'none' },
+                    {
+                      x: -0.1,
+                      y: () => (isMobile.iOS() != null ? 0.58 : -0.6),
+                      duration: 0.5,
+                      ease: 'none',
+                    },
                     '+=1'
                   );
                   tl.to(
@@ -709,7 +714,12 @@ function init3D() {
                   );
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -0.56, duration: 0.5, ease: 'none' },
+                    {
+                      x: -0.1,
+                      y: () => (isMobile.iOS() != null ? 0.54 : -0.56),
+                      duration: 0.5,
+                      ease: 'none',
+                    },
                     '+=1'
                   );
                   tl.to(
@@ -747,7 +757,12 @@ function init3D() {
                   );
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -0.5, duration: 0.5, ease: 'none' },
+                    {
+                      x: -0.1,
+                      y: () => (isMobile.iOS() != null ? 0.48 : -0.5),
+                      duration: 0.5,
+                      ease: 'none'
+                    },
                     '+=1'
                   );
                   tl.to(
