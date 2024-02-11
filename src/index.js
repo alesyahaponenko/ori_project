@@ -820,6 +820,21 @@ function init3D() {
                       : window.innerHeight > 890
                         ? -0.52
                         : null;
+            if (isMobile.iOS() != null) {
+              top_image2.position.y = desktop
+                ? -0.38
+                : tablet
+                  ? -0.7
+                  : window.innerHeight < 700
+                    ? -0.63
+                    : window.innerHeight > 700 && window.innerHeight < 791
+                      ? -0.58
+                      : window.innerHeight > 790 && window.innerHeight < 891
+                        ? -0.56
+                        : window.innerHeight > 890
+                          ? -0.5
+                          : null;
+            }
             top_image2.position.x = desktop ? -0.06 : -0.1;
             top_image2.scale.multiplyScalar(desktop ? 1 : tablet ? 1 : 1.3);
             top_image2.material = new THREE.MeshBasicMaterial();
@@ -840,6 +855,21 @@ function init3D() {
                       : window.innerHeight > 890
                         ? -0.55
                         : null;
+            if (isMobile.iOS() != null) {
+              illu_arrows.position.y = desktop
+                ? -0.38
+                : tablet
+                  ? -0.68
+                  : window.innerHeight < 700
+                    ? -0.61
+                    : window.innerHeight > 700 && window.innerHeight < 791
+                      ? -0.56
+                      : window.innerHeight > 790 && window.innerHeight < 891
+                        ? -0.54
+                        : window.innerHeight > 890
+                          ? -0.48
+                          : null;
+            }
             illu_arrows.position.x = desktop ? -0.03 : tablet ? -0.05 : -0.05;
             // illu_arrows.position.y = desktop ? -0.38 : tablet ? -0.72 : -0.74;
             // illu_arrows.position.x = desktop ? -0.06 : -0.1;
