@@ -359,7 +359,8 @@ function init3D() {
       return navigator.userAgent.match(/BlackBerry/i);
     },
     iOS: function () {
-      return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      // return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      return /iPhone|iPad|iPod/i.test(navigator.userAgent);
     },
     Opera: function () {
       return navigator.userAgent.match(/Opera Mini/i);
@@ -848,6 +849,7 @@ function init3D() {
           if (child.name === 'Cylinder') {
             cylinder = scene.getObjectByName('Cylinder');
             cylinder.material = glassMaterial;
+
             cylinder.position.y = desktop
               ? -0.54
               : tablet
@@ -861,6 +863,21 @@ function init3D() {
                       : window.innerHeight > 890
                         ? -0.75
                         : null;
+            if (isMobile.iOS() != null) {
+              cylinder.position.y = desktop
+                ? -0.54
+                : tablet
+                  ? -1.02
+                  : window.innerHeight < 700
+                    ? -0.91
+                    : window.innerHeight > 700 && window.innerHeight < 791
+                      ? -0.83
+                      : window.innerHeight > 790 && window.innerHeight < 891
+                        ? -0.78
+                        : window.innerHeight > 890
+                          ? -0.7
+                          : null;
+            }
             cylinder.position.x = desktop ? -0.05 : -0.1;
             cylinder.scale.multiplyScalar(
               desktop ? 0.9 : tablet ? 1.2 : 1
@@ -888,10 +905,25 @@ function init3D() {
                   : window.innerHeight > 700 && window.innerHeight < 791
                     ? -0.88
                     : window.innerHeight > 790 && window.innerHeight < 891
-                    ? -0.82
-                    : window.innerHeight > 890
-                      ? -0.75
-                      : null;
+                      ? -0.82
+                      : window.innerHeight > 890
+                        ? -0.75
+                        : null;
+            if (isMobile.iOS() != null) {
+              process.position.y = desktop
+                ? -0.54
+                : tablet
+                  ? -1.02
+                  : window.innerHeight < 700
+                    ? -0.91
+                    : window.innerHeight > 700 && window.innerHeight < 791
+                      ? -0.83
+                      : window.innerHeight > 790 && window.innerHeight < 891
+                        ? -0.78
+                        : window.innerHeight > 890
+                          ? -0.7
+                          : null;
+            }
             process.position.x = desktop ? -0.08 : -0.1;
             process.scale.x = 0.033;
             process.scale.z = 0.03;
