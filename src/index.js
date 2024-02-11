@@ -855,11 +855,11 @@ function init3D() {
                 : window.innerHeight < 700
                   ? -0.96
                   : window.innerHeight > 700 && window.innerHeight < 791
-                    ? -0.9
+                    ? -0.88
                     : window.innerHeight > 790 && window.innerHeight < 891
-                      ? -0.84
+                      ? -0.82
                       : window.innerHeight > 890
-                        ? -0.77
+                        ? -0.75
                         : null;
             cylinder.position.x = desktop ? -0.05 : -0.1;
             cylinder.scale.multiplyScalar(
@@ -886,11 +886,11 @@ function init3D() {
                 : window.innerHeight < 700
                   ? -0.96
                   : window.innerHeight > 700 && window.innerHeight < 791
-                    ? -0.9
+                    ? -0.88
                     : window.innerHeight > 790 && window.innerHeight < 891
-                    ? -0.84
+                    ? -0.82
                     : window.innerHeight > 890
-                      ? -0.77
+                      ? -0.75
                       : null;
             process.position.x = desktop ? -0.08 : -0.1;
             process.scale.x = 0.033;
