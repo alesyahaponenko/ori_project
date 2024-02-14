@@ -359,8 +359,8 @@ function init3D() {
       return navigator.userAgent.match(/BlackBerry/i);
     },
     iOS: function () {
-      // return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-      return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      // return /iPhone|iPad|iPod/i.test(navigator.userAgent);
     },
     Opera: function () {
       return navigator.userAgent.match(/Opera Mini/i);
@@ -673,7 +673,7 @@ function init3D() {
                     glassThing.position,
                     {
                       x: -0.1,
-                      y: () => (isMobile.iOS() != null ? 0.58 : -0.6),
+                      y: () => (isMobile.iOS() ? 0.58 : -0.6),
                       duration: 0.5,
                       ease: 'none',
                     },
@@ -716,7 +716,7 @@ function init3D() {
                     glassThing.position,
                     {
                       x: -0.1,
-                      y: () => (isMobile.iOS() != null ? 0.54 : -0.56),
+                      y: () => (isMobile.iOS() ? 0.54 : -0.56),
                       duration: 0.5,
                       ease: 'none',
                     },
@@ -759,7 +759,7 @@ function init3D() {
                     glassThing.position,
                     {
                       x: -0.1,
-                      y: () => (isMobile.iOS() != null ? 0.48 : -0.5),
+                      y: () => (isMobile.iOS() ? 0.48 : -0.5),
                       duration: 0.5,
                       ease: 'none'
                     },
@@ -835,7 +835,7 @@ function init3D() {
                       : window.innerHeight > 890
                         ? -0.52
                         : null;
-            if (isMobile.iOS() != null) {
+            if (isMobile.iOS()) {
               top_image2.position.y = desktop
                 ? -0.38
                 : tablet
@@ -870,7 +870,7 @@ function init3D() {
                       : window.innerHeight > 890
                         ? -0.55
                         : null;
-            if (isMobile.iOS() != null) {
+            if (isMobile.iOS()) {
               illu_arrows.position.y = desktop
                 ? -0.38
                 : tablet
@@ -894,7 +894,6 @@ function init3D() {
           if (child.name === 'Cylinder') {
             cylinder = scene.getObjectByName('Cylinder');
             cylinder.material = glassMaterial;
-
             cylinder.position.y = desktop
               ? -0.54
               : tablet
@@ -906,9 +905,9 @@ function init3D() {
                     : window.innerHeight > 790 && window.innerHeight < 891
                       ? -0.82
                       : window.innerHeight > 890
-                        ? -0.75
+                        ? -0.765
                         : null;
-            if (isMobile.iOS() != null) {
+            if (isMobile.iOS()) {
               cylinder.position.y = desktop
                 ? -0.54
                 : tablet
@@ -952,9 +951,9 @@ function init3D() {
                     : window.innerHeight > 790 && window.innerHeight < 891
                       ? -0.82
                       : window.innerHeight > 890
-                        ? -0.75
+                        ? -0.765
                         : null;
-            if (isMobile.iOS() != null) {
+            if (isMobile.iOS()) {
               process.position.y = desktop
                 ? -0.54
                 : tablet
