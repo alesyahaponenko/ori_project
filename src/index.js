@@ -633,7 +633,7 @@ function init3D() {
                   );
                   tl.to(
                     glassThing.position,
-                    { x: -0.1, y: -0.65, duration: 0.5, ease: 'none' },
+                    { x: -0.1, y: -0.75, duration: 0.5, ease: 'none' },
                     '+=1'
                   );
                   tl.to(
@@ -673,7 +673,7 @@ function init3D() {
                     glassThing.position,
                     {
                       x: -0.1,
-                      y: () => (isMobile.iOS() ? 0.58 : -0.6),
+                      y: () => (isMobile.iOS() ? 0.58 : -0.7),
                       duration: 0.5,
                       ease: 'none',
                     },
@@ -716,7 +716,7 @@ function init3D() {
                     glassThing.position,
                     {
                       x: -0.1,
-                      y: () => (isMobile.iOS() ? 0.54 : -0.56),
+                      y: () => (isMobile.iOS() ? 0.54 : -0.65),
                       duration: 0.5,
                       ease: 'none',
                     },
@@ -759,7 +759,7 @@ function init3D() {
                     glassThing.position,
                     {
                       x: -0.1,
-                      y: () => (isMobile.iOS() ? 0.48 : -0.5),
+                      y: () => (isMobile.iOS() ? 0.48 : -0.57),
                       duration: 0.5,
                       ease: 'none'
                     },
@@ -827,13 +827,13 @@ function init3D() {
               : tablet
                 ? -0.72
                 : window.innerHeight < 700
-                  ? -0.65
+                  ? -0.75
                   : window.innerHeight > 700 && window.innerHeight < 791
-                    ? -0.6
+                    ? -0.70
                     : window.innerHeight > 790 && window.innerHeight < 891
-                      ? -0.58
+                      ? -0.65
                       : window.innerHeight > 890
-                        ? -0.52
+                        ? -0.58
                         : null;
             if (isMobile.iOS()) {
               top_image2.position.y = desktop
@@ -862,13 +862,13 @@ function init3D() {
               : tablet
                 ? -0.74
                 : window.innerHeight < 700
-                  ? -0.67
+                  ? -0.76
                   : window.innerHeight > 700 && window.innerHeight < 791
-                    ? -0.62
+                    ? -0.70
                     : window.innerHeight > 790 && window.innerHeight < 891
-                      ? -0.58
+                      ? -0.65
                       : window.innerHeight > 890
-                        ? -0.55
+                        ? -0.58
                         : null;
             if (isMobile.iOS()) {
               illu_arrows.position.y = desktop
@@ -899,13 +899,13 @@ function init3D() {
               : tablet
                 ? -1.02
                 : window.innerHeight < 700
-                  ? -0.96
+                  ? -1.05
                   : window.innerHeight > 700 && window.innerHeight < 791
-                    ? -0.88
+                    ? -0.96
                     : window.innerHeight > 790 && window.innerHeight < 891
-                      ? -0.82
+                      ? -0.89
                       : window.innerHeight > 890
-                        ? -0.765
+                        ? -0.83
                         : null;
             if (isMobile.iOS()) {
               cylinder.position.y = desktop
@@ -945,13 +945,13 @@ function init3D() {
               : tablet
                 ? -1.02
                 : window.innerHeight < 700
-                  ? -0.96
+                  ? -1.05
                   : window.innerHeight > 700 && window.innerHeight < 791
-                    ? -0.88
+                    ? -0.96
                     : window.innerHeight > 790 && window.innerHeight < 891
-                      ? -0.82
+                      ? -0.89
                       : window.innerHeight > 890
-                        ? -0.765
+                        ? -0.83
                         : null;
             if (isMobile.iOS()) {
               process.position.y = desktop
@@ -1136,41 +1136,7 @@ function init3D() {
     });
   }
 
-  function clickMenuBtn() {
-    const line1 = document.querySelector('.menu1');
-    const line2 = document.querySelector('.menu2');
-    const line3 = document.querySelector('.menu3');
-    const btnMenu = document.querySelector('.menu-button.w-nav-button');
 
-    let tl = gsap.timeline({ paused: true });
-    tl.to(line1, { rotate: 45, y: 0, background: 'white' })
-      .to(line2, { rotate: -45, y: 0, background: 'white' }, 0)
-      .to(line3, { y: 4, opacity: 0, background: 'white' }, 0)
-      .reverse();
-
-    btnMenu.addEventListener('click', (e) => {
-      e.stopPropagation();
-      setTimeout(() => {
-        const links = document.querySelectorAll('.w--nav-link-open');
-        links.forEach((el) => {
-          el.addEventListener('click', () => {
-            tl.reverse();
-            scrollBarElement.updatePluginOptions('modal', { open: false });
-          });
-        });
-      }, 300);
-
-      tl.reversed(!tl.reversed());
-
-      if (btnMenu.classList.contains('w--open')) {
-        // scrollBarElement.updatePluginOptions('modal', { open: false });
-      } else {
-        // scrollBarElement.updatePluginOptions('modal', { open: true });
-      }
-    });
-  }
-
-  clickMenuBtn();
 
   function onWindowResize() {
     console.log('resize');
