@@ -1,12 +1,17 @@
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
+import * as THREE from 'three';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
   newsGallery();
   portfolioGallery();
   portfolioHover();
+  init3D();
   sizes();
 });
 
