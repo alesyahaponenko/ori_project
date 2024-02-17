@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
+  console.log('init')
   newsGallery();
   portfolioGallery();
   portfolioHover();
