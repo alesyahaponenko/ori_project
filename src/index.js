@@ -7,20 +7,14 @@ window.Webflow.push(() => {
   console.log('init')
   newsGallery();
   portfolioGallery();
-  portfolioHover();
+  resize();
   sizes();
 });
 
-function portfolioHover() {
-  const blockPortfolioHover = document.querySelectorAll('.grid-wrap .blockportfolio');
-  blockPortfolioHover.forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      el.classList.add('hover');
-    });
-    el.addEventListener('mouseleave', () => {
-      el.classList.remove('hover');
-    });
-  });
+function resize() {
+  console.log('resize');
+
+  window.addEventListener('resize', sizes);
 }
 
 function sizes() {
@@ -34,6 +28,8 @@ function sizes() {
     });
   });
 }
+
+
 
 function portfolioGallery() {
   const portfWrapp = document.querySelector('.grid-wrap');
